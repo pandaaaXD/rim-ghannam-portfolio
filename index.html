@@ -384,12 +384,12 @@ spanning-tree mode rapid-pvst</code></pre>
               </p>
               <ul class="case-card__impact">
                 <li data-i18n="mon.i1"><strong>Le mur = coup d'œil</strong> : santé applicative globale depuis ELK, découpée en deux écrans qui tournent en playlist kiosk (30 s) — vert = tout va bien, rouge = on creuse</li>
-                <li data-i18n="mon.i2"><strong>Le dashboard client = investigation</strong> : template PRTG multi-clients (via proxy Nginx) — CPU / RAM / disque par rôle serveur, rechargé sur le parc d'un client via une variable auto-remplie</li>
+                <li data-i18n="mon.i2"><strong>Le dashboard client = investigation</strong> : template PRTG multi-clients — CPU / RAM / disque par rôle serveur, rechargé sur le parc d'un client via une variable auto-remplie</li>
                 <li data-i18n="mon.i3"><strong>Contrainte respectée</strong> : pipeline de logs intouchable → enrichissement par runtime fields dans les index templates Elasticsearch, qui survivent aux rollovers ILM</li>
                 <li data-i18n="mon.i4"><strong>Parc multi-clients</strong> : serveurs classés par conventions de nommage (type d'infra × rôle) qui alimentent les dashboards templatisés</li>
               </ul>
               <div class="case-card__stack">
-                <span class="chip chip--sm">Grafana 12</span><span class="chip chip--sm">PRTG</span><span class="chip chip--sm">ELK / Elasticsearch</span><span class="chip chip--sm">Loki</span><span class="chip chip--sm">Nginx</span><span class="chip chip--sm">Bash</span><span class="chip chip--sm">NOC</span>
+                <span class="chip chip--sm">Grafana</span><span class="chip chip--sm">PRTG</span><span class="chip chip--sm">ELK / Elasticsearch</span><span class="chip chip--sm">Loki</span><span class="chip chip--sm">Bash</span><span class="chip chip--sm">NOC</span>
               </div>
               <div class="diagram">
                 <div class="diagram__bar">
