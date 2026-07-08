@@ -375,18 +375,18 @@ spanning-tree mode rapid-pvst</code></pre>
               <h3 data-i18n="mon.title">NOC — supervision centralisée Grafana (PRTG · ELK · Loki)</h3>
               <p class="case-card__role" data-i18n="mon.role">Conception &amp; maintenance du NOC — dashboards, chaînes de données, scripts</p>
               <p data-i18n="mon.desc">
-                Construction d'un NOC restitué dans Grafana et affiché sur mur TV en mode kiosk,
-                pour superviser un parc hébergé multi-clients. Trois chaînes de données
-                indépendantes y convergent : les métriques infra PRTG (CPU / RAM / disque par
-                serveur et par rôle), la disponibilité applicative synthétique mesurée par des
-                scripts Bash qui poussent vers Loki, et les logs IIS / applicatifs remontés
-                par la stack ELK (Filebeat → Logstash → Elasticsearch).
+                Construction d'un NOC restitué dans Grafana pour superviser un parc hébergé
+                multi-clients, avec deux usages complémentaires : un mur TV en mode kiosk qui
+                montre l'état de santé applicatif global en temps réel (logs IIS / applicatifs
+                via ELK — disponibilité, erreurs, SLA), et des dashboards d'investigation par
+                client construits sur PRTG (CPU / RAM / disque par rôle serveur). La
+                disponibilité synthétique est mesurée par des scripts Bash qui poussent vers Loki.
               </p>
               <ul class="case-card__impact">
-                <li data-i18n="mon.i1"><strong>Mur TV NOC</strong> : dashboards Grafana 12 en mode kiosk, rotation par playlist — l'état du parc se lit en un coup d'œil</li>
-                <li data-i18n="mon.i2"><strong>Trois chaînes fédérées</strong> : PRTG exposé à Grafana via un proxy Nginx (filtrage par client), checks Bash → Loki, logs via ELK</li>
+                <li data-i18n="mon.i1"><strong>Le mur = coup d'œil</strong> : santé applicative globale depuis ELK, découpée en deux écrans qui tournent en playlist kiosk (30 s) — vert = tout va bien, rouge = on creuse</li>
+                <li data-i18n="mon.i2"><strong>Le dashboard client = investigation</strong> : template PRTG multi-clients (via proxy Nginx) — CPU / RAM / disque par rôle serveur, rechargé sur le parc d'un client via une variable auto-remplie</li>
                 <li data-i18n="mon.i3"><strong>Contrainte respectée</strong> : pipeline de logs intouchable → enrichissement par runtime fields dans les index templates Elasticsearch, qui survivent aux rollovers ILM</li>
-                <li data-i18n="mon.i4"><strong>Parc multi-clients</strong> : serveurs classés par conventions de nommage (type d'infra × rôle) qui alimentent des dashboards templatisés</li>
+                <li data-i18n="mon.i4"><strong>Parc multi-clients</strong> : serveurs classés par conventions de nommage (type d'infra × rôle) qui alimentent les dashboards templatisés</li>
               </ul>
               <div class="case-card__stack">
                 <span class="chip chip--sm">Grafana 12</span><span class="chip chip--sm">PRTG</span><span class="chip chip--sm">ELK / Elasticsearch</span><span class="chip chip--sm">Loki</span><span class="chip chip--sm">Nginx</span><span class="chip chip--sm">Bash</span><span class="chip chip--sm">NOC</span>
@@ -394,7 +394,7 @@ spanning-tree mode rapid-pvst</code></pre>
               <div class="diagram">
                 <div class="diagram__bar">
                   <span class="mono">noc-sla-elk.webp</span>
-                  <span class="mono diagram__note" data-i18n="mon.shot1">// dashboard 1 — SLA multi-clients calculée depuis Loki, erreurs remontées par ELK (par serveur et par application)</span>
+                  <span class="mono diagram__note" data-i18n="mon.shot1">// le mur TV (vue d'ensemble) — SLA depuis Loki, erreurs applicatives depuis ELK : vert = OK, rouge = on creuse</span>
                 </div>
                 <div class="diagram__body">
                   <a href="assets/img/noc-sla-elk.webp" target="_blank" rel="noopener" aria-label="Ouvrir la capture du dashboard SLA / erreurs en grand">
@@ -406,7 +406,7 @@ spanning-tree mode rapid-pvst</code></pre>
               <div class="diagram">
                 <div class="diagram__bar">
                   <span class="mono">noc-prtg.webp</span>
-                  <span class="mono diagram__note" data-i18n="mon.shot2">// dashboard 2 — métriques PRTG : CPU / RAM / disque par serveur et par rôle (VDA Citrix, fichiers, SQL)</span>
+                  <span class="mono diagram__note" data-i18n="mon.shot2">// le dashboard client (investigation) — métriques PRTG : CPU / RAM / disque par serveur et par rôle (VDA Citrix, fichiers, SQL)</span>
                 </div>
                 <div class="diagram__body">
                   <a href="assets/img/noc-prtg.webp" target="_blank" rel="noopener" aria-label="Ouvrir la capture du dashboard PRTG en grand">
