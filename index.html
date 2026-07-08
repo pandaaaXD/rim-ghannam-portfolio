@@ -393,13 +393,25 @@ spanning-tree mode rapid-pvst</code></pre>
               </div>
               <div class="diagram">
                 <div class="diagram__bar">
-                  <span class="mono">noc-dashboard.webp</span>
-                  <span class="mono diagram__note" data-i18n="mon.shot">// aperçu du dashboard NOC — SLA par type d'infra, erreurs par serveur et par application</span>
+                  <span class="mono">noc-sla-elk.webp</span>
+                  <span class="mono diagram__note" data-i18n="mon.shot1">// dashboard 1 — SLA multi-clients calculée depuis Loki, erreurs remontées par ELK (par serveur et par application)</span>
                 </div>
                 <div class="diagram__body">
-                  <a href="assets/img/noc-dashboard.webp" target="_blank" rel="noopener" aria-label="Ouvrir la capture du dashboard NOC en grand">
-                    <img src="assets/img/noc-dashboard.webp" loading="lazy"
-                         alt="Dashboard NOC dans Grafana : SLA de disponibilité par type d'infrastructure, treemaps des erreurs par serveur et par application, répartition des erreurs IIS par type d'infra (noms de serveurs floutés)" />
+                  <a href="assets/img/noc-sla-elk.webp" target="_blank" rel="noopener" aria-label="Ouvrir la capture du dashboard SLA / erreurs en grand">
+                    <img src="assets/img/noc-sla-elk.webp" loading="lazy"
+                         alt="Dashboard NOC 1 dans Grafana : SLA de disponibilité par type d'infrastructure et site web calculée depuis Loki, treemaps des erreurs ELK par serveur et par application, camemberts de répartition des erreurs par infra et par application (noms de serveurs floutés)" />
+                  </a>
+                </div>
+              </div>
+              <div class="diagram">
+                <div class="diagram__bar">
+                  <span class="mono">noc-prtg.webp</span>
+                  <span class="mono diagram__note" data-i18n="mon.shot2">// dashboard 2 — métriques PRTG : CPU / RAM / disque par serveur et par rôle (VDA Citrix, fichiers, SQL)</span>
+                </div>
+                <div class="diagram__body">
+                  <a href="assets/img/noc-prtg.webp" target="_blank" rel="noopener" aria-label="Ouvrir la capture du dashboard PRTG en grand">
+                    <img src="assets/img/noc-prtg.webp" loading="lazy"
+                         alt="Dashboard NOC 2 dans Grafana : jauges PRTG de CPU, RAM et pourcentage de disque libre par serveur, groupées par rôle — serveurs VDA Citrix, serveur de fichiers, serveur SQL (noms de serveurs floutés)" />
                   </a>
                 </div>
               </div>

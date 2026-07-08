@@ -82,7 +82,8 @@
       "mon.i2": "<strong>Trois chaînes fédérées</strong> : PRTG exposé à Grafana via un proxy Nginx (filtrage par client), checks Bash → Loki, logs via ELK",
       "mon.i3": "<strong>Contrainte respectée</strong> : pipeline de logs intouchable → enrichissement par runtime fields dans les index templates Elasticsearch, qui survivent aux rollovers ILM",
       "mon.i4": "<strong>Parc multi-clients</strong> : serveurs classés par conventions de nommage (type d'infra × rôle) qui alimentent des dashboards templatisés",
-      "mon.shot": "// aperçu du dashboard NOC — SLA par type d'infra, erreurs par serveur et par application",
+      "mon.shot1": "// dashboard 1 — SLA multi-clients calculée depuis Loki, erreurs remontées par ELK (par serveur et par application)",
+      "mon.shot2": "// dashboard 2 — métriques PRTG : CPU / RAM / disque par serveur et par rôle (VDA Citrix, fichiers, SQL)",
 
       "auto.title": "Automatisation &amp; plans de continuité (PCA / PRA)",
       "auto.role": "Scripts Bash / Python, playbooks Ansible, participation aux PCA/PRA",
@@ -239,7 +240,8 @@
       "mon.i2": "<strong>Three federated chains</strong>: PRTG exposed to Grafana through an Nginx proxy (per-client filtering), Bash checks → Loki, logs via ELK",
       "mon.i3": "<strong>Constraint honoured</strong>: the log pipeline couldn't be touched → enrichment via runtime fields in Elasticsearch index templates, surviving ILM rollovers",
       "mon.i4": "<strong>Multi-tenant fleet</strong>: servers classified by naming conventions (infra type × role) feeding templated dashboards",
-      "mon.shot": "// NOC dashboard preview — SLA per infra type, errors per server and per application",
+      "mon.shot1": "// dashboard 1 — multi-tenant SLA computed from Loki, errors surfaced by ELK (per server and per application)",
+      "mon.shot2": "// dashboard 2 — PRTG metrics: CPU / RAM / disk per server and per role (Citrix VDA, file, SQL)",
 
       "auto.title": "Automation &amp; business continuity (BCP / DRP)",
       "auto.role": "Bash / Python scripts, Ansible playbooks, BCP/DRP involvement",
