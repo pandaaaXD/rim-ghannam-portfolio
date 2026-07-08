@@ -391,72 +391,17 @@ spanning-tree mode rapid-pvst</code></pre>
               <div class="case-card__stack">
                 <span class="chip chip--sm">Grafana 12</span><span class="chip chip--sm">PRTG</span><span class="chip chip--sm">ELK / Elasticsearch</span><span class="chip chip--sm">Loki</span><span class="chip chip--sm">Nginx</span><span class="chip chip--sm">Bash</span><span class="chip chip--sm">NOC</span>
               </div>
-              <div class="code-tabs" data-code-tabs>
-                <div class="code-tabs__bar" role="tablist" aria-label="Extraits de configuration monitoring">
-                  <button class="code-tabs__tab is-active mono" role="tab" aria-selected="true">datasources.yml</button>
-                  <button class="code-tabs__tab mono" role="tab" aria-selected="false">check_apps.sh</button>
-                  <button class="code-tabs__tab mono" role="tab" aria-selected="false">index-template (ES)</button>
-                  <button class="code-tabs__copy mono" type="button" data-i18n="code.copy" aria-label="Copier l'extrait">copier</button>
+              <div class="diagram">
+                <div class="diagram__bar">
+                  <span class="mono">noc-dashboard.webp</span>
+                  <span class="mono diagram__note" data-i18n="mon.shot">// aperçu du dashboard NOC — SLA par type d'infra, erreurs par serveur et par application</span>
                 </div>
-                <pre class="code-tabs__panel is-active"><code><span class="c"># provisioning/datasources — les 3 chaînes du NOC dans Grafana</span>
-apiVersion: 1
-
-datasources:
-  - name: ELK — logs IIS
-    type: elasticsearch
-    url: http://elastic:9200
-    jsonData: { index: "logs-iis*", timeField: "@timestamp" }
-
-  - name: ELK — logs applicatifs
-    type: elasticsearch
-    url: http://elastic:9200
-    jsonData: { index: "logs-app*", timeField: "@timestamp" }
-
-  - name: Loki — checks synthétiques
-    type: loki
-    url: http://loki:3100
-
-  - name: PRTG — métriques infra
-    type: marcusolsson-json-datasource
-    url: http://127.0.0.1:8080  <span class="c"># proxy Nginx → API PRTG, filtrage par client</span></code></pre>
-                <pre class="code-tabs__panel"><code><span class="c">#!/usr/bin/env bash</span>
-<span class="c"># check_apps.sh — disponibilité applicative synthétique → Loki</span>
-<span class="c"># grande liste de cibles à tester dans une fenêtre de 5 minutes</span>
-MAX_PARALLEL=30
-exec 9&gt;"/var/run/monitoring/check_apps.lock"
-flock -n 9 || exit 0  <span class="c"># pas deux exécutions en parallèle</span>
-
-check() {
-  local code
-  code=$(curl -sk -o /dev/null -w '%{http_code}' -m 10 "$1")
-  push_loki "dispo_apps" "$1" "code=$code"
-}
-
-while read -r cible; do
-  check "$cible" &amp;
-  while (( $(jobs -r | wc -l) &gt;= MAX_PARALLEL )); do wait -n; done
-done &lt; cibles.txt
-wait</code></pre>
-                <pre class="code-tabs__panel"><code><span class="c"># Kibana Dev Tools — enrichissement côté Elasticsearch :</span>
-<span class="c"># le pipeline Logstash n'est pas modifiable, le champ calculé</span>
-<span class="c"># vit donc dans l'index template et survit aux rollovers ILM.</span>
-PUT _index_template/template-iis
-{
-  "index_patterns": ["logs-iis*"],
-  "priority": 200,
-  "template": {
-    "mappings": {
-      "runtime": {
-        "app_name": {
-          "type": "keyword",
-          "script": {
-            "source": "emit(doc['uri_stem'].value.splitOnToken('/')[1])"
-          }
-        }
-      }
-    }
-  }
-}</code></pre>
+                <div class="diagram__body">
+                  <a href="assets/img/noc-dashboard.webp" target="_blank" rel="noopener" aria-label="Ouvrir la capture du dashboard NOC en grand">
+                    <img src="assets/img/noc-dashboard.webp" loading="lazy"
+                         alt="Dashboard NOC dans Grafana : SLA de disponibilité par type d'infrastructure, treemaps des erreurs par serveur et par application, répartition des erreurs IIS par type d'infra (noms de serveurs floutés)" />
+                  </a>
+                </div>
               </div>
             </div>
           </article>

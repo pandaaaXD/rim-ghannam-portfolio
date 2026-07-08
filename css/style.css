@@ -488,6 +488,15 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .diagram__note { color: var(--text-muted); opacity: 0.8; }
 .diagram__body { padding: 12px; }
 .diagram__body svg { width: 100%; height: auto; display: block; }
+.diagram__body img {
+  width: 100%; height: auto; display: block;
+  border-radius: 6px; border: 1px solid var(--border);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.diagram__body a:hover img {
+  transform: scale(1.01);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
 
 /* ---------- contact ---------- */
 .contact__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
