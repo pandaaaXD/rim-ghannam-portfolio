@@ -372,61 +372,91 @@ spanning-tree mode rapid-pvst</code></pre>
                 <span class="case-card__tag mono" data-i18n="tag.infra">PROJET INFRA</span>
                 <span class="case-card__date mono" data-i18n="date.cegi">Groupe CEGI · alternance</span>
               </div>
-              <h3 data-i18n="mon.title">NOC — supervision centralisée Grafana (ELK · Loki · PRTG)</h3>
-              <p class="case-card__role" data-i18n="mon.role">Conception d'un centre de supervision (NOC) multi-sources</p>
+              <h3 data-i18n="mon.title">NOC — supervision centralisée Grafana (PRTG · ELK · Loki)</h3>
+              <p class="case-card__role" data-i18n="mon.role">Conception &amp; maintenance du NOC — dashboards, chaînes de données, scripts</p>
               <p data-i18n="mon.desc">
-                Mise en place d'un NOC : un point d'observation unique dans Grafana qui fédère
-                plusieurs sources — les logs indexés dans ELK (Elasticsearch), les logs
-                applicatifs collectés par Loki/Promtail et la supervision réseau PRTG — pour
-                surveiller toute l'infrastructure depuis un seul écran.
+                Construction d'un NOC restitué dans Grafana et affiché sur mur TV en mode kiosk,
+                pour superviser un parc hébergé multi-clients. Trois chaînes de données
+                indépendantes y convergent : les métriques infra PRTG (CPU / RAM / disque par
+                serveur et par rôle), la disponibilité applicative synthétique mesurée par des
+                scripts Bash qui poussent vers Loki, et les logs IIS / applicatifs remontés
+                par la stack ELK (Filebeat → Logstash → Elasticsearch).
               </p>
               <ul class="case-card__impact">
-                <li data-i18n="mon.i1"><strong>Un seul écran</strong> : métriques, logs et état du réseau réunis dans des dashboards Grafana communs</li>
-                <li data-i18n="mon.i2"><strong>Trois sources fédérées</strong> : Elasticsearch (ELK), Loki et PRTG interrogés depuis le même outil</li>
-                <li data-i18n="mon.i3"><strong>Diagnostic accéléré</strong> : une alerte réseau PRTG se corrèle aux logs ELK/Loki au même endroit</li>
+                <li data-i18n="mon.i1"><strong>Mur TV NOC</strong> : dashboards Grafana 12 en mode kiosk, rotation par playlist — l'état du parc se lit en un coup d'œil</li>
+                <li data-i18n="mon.i2"><strong>Trois chaînes fédérées</strong> : PRTG exposé à Grafana via un proxy Nginx (filtrage par client), checks Bash → Loki, logs via ELK</li>
+                <li data-i18n="mon.i3"><strong>Contrainte respectée</strong> : pipeline de logs intouchable → enrichissement par runtime fields dans les index templates Elasticsearch, qui survivent aux rollovers ILM</li>
+                <li data-i18n="mon.i4"><strong>Parc multi-clients</strong> : serveurs classés par conventions de nommage (type d'infra × rôle) qui alimentent des dashboards templatisés</li>
               </ul>
               <div class="case-card__stack">
-                <span class="chip chip--sm">Grafana</span><span class="chip chip--sm">ELK / Elasticsearch</span><span class="chip chip--sm">Loki</span><span class="chip chip--sm">PRTG</span><span class="chip chip--sm">Promtail</span><span class="chip chip--sm">NOC</span>
+                <span class="chip chip--sm">Grafana 12</span><span class="chip chip--sm">PRTG</span><span class="chip chip--sm">ELK / Elasticsearch</span><span class="chip chip--sm">Loki</span><span class="chip chip--sm">Nginx</span><span class="chip chip--sm">Bash</span><span class="chip chip--sm">NOC</span>
               </div>
               <div class="code-tabs" data-code-tabs>
-                <div class="code-tabs__bar" role="tablist" aria-label="Extrait de configuration monitoring">
+                <div class="code-tabs__bar" role="tablist" aria-label="Extraits de configuration monitoring">
                   <button class="code-tabs__tab is-active mono" role="tab" aria-selected="true">datasources.yml</button>
-                  <button class="code-tabs__tab mono" role="tab" aria-selected="false">promtail.yml</button>
+                  <button class="code-tabs__tab mono" role="tab" aria-selected="false">check_apps.sh</button>
+                  <button class="code-tabs__tab mono" role="tab" aria-selected="false">index-template (ES)</button>
                   <button class="code-tabs__copy mono" type="button" data-i18n="code.copy" aria-label="Copier l'extrait">copier</button>
                 </div>
-                <pre class="code-tabs__panel is-active"><code><span class="c"># provisioning/datasources/noc.yml — les 3 sources du NOC dans Grafana</span>
+                <pre class="code-tabs__panel is-active"><code><span class="c"># provisioning/datasources — les 3 chaînes du NOC dans Grafana</span>
 apiVersion: 1
 
 datasources:
-  - name: ELK
+  - name: ELK — logs IIS
     type: elasticsearch
     url: http://elastic:9200
-    jsonData:
-      index: "logs-*"
-      timeField: "@timestamp"
+    jsonData: { index: "logs-iis*", timeField: "@timestamp" }
 
-  - name: Loki
+  - name: ELK — logs applicatifs
+    type: elasticsearch
+    url: http://elastic:9200
+    jsonData: { index: "logs-app*", timeField: "@timestamp" }
+
+  - name: Loki — checks synthétiques
     type: loki
     url: http://loki:3100
 
-  - name: PRTG
-    type: jasonlashua-prtg-datasource
-    url: https://prtg.exemple.local</code></pre>
-                <pre class="code-tabs__panel"><code><span class="c"># promtail.yml — collecte des logs système vers Loki</span>
-server:
-  http_listen_port: 9080
+  - name: PRTG — métriques infra
+    type: marcusolsson-json-datasource
+    url: http://127.0.0.1:8080  <span class="c"># proxy Nginx → API PRTG, filtrage par client</span></code></pre>
+                <pre class="code-tabs__panel"><code><span class="c">#!/usr/bin/env bash</span>
+<span class="c"># check_apps.sh — disponibilité applicative synthétique → Loki</span>
+<span class="c"># grande liste de cibles à tester dans une fenêtre de 5 minutes</span>
+MAX_PARALLEL=30
+exec 9&gt;"/var/run/monitoring/check_apps.lock"
+flock -n 9 || exit 0  <span class="c"># pas deux exécutions en parallèle</span>
 
-clients:
-  - url: http://loki:3100/loki/api/v1/push
+check() {
+  local code
+  code=$(curl -sk -o /dev/null -w '%{http_code}' -m 10 "$1")
+  push_loki "dispo_apps" "$1" "code=$code"
+}
 
-scrape_configs:
-  - job_name: syslog
-    static_configs:
-      - targets: [localhost]
-        labels:
-          job: syslog
-          host: srv-app-01
-          __path__: /var/log/syslog</code></pre>
+while read -r cible; do
+  check "$cible" &amp;
+  while (( $(jobs -r | wc -l) &gt;= MAX_PARALLEL )); do wait -n; done
+done &lt; cibles.txt
+wait</code></pre>
+                <pre class="code-tabs__panel"><code><span class="c"># Kibana Dev Tools — enrichissement côté Elasticsearch :</span>
+<span class="c"># le pipeline Logstash n'est pas modifiable, le champ calculé</span>
+<span class="c"># vit donc dans l'index template et survit aux rollovers ILM.</span>
+PUT _index_template/template-iis
+{
+  "index_patterns": ["logs-iis*"],
+  "priority": 200,
+  "template": {
+    "mappings": {
+      "runtime": {
+        "app_name": {
+          "type": "keyword",
+          "script": {
+            "source": "emit(doc['uri_stem'].value.splitOnToken('/')[1])"
+          }
+        }
+      }
+    }
+  }
+}</code></pre>
               </div>
             </div>
           </article>
