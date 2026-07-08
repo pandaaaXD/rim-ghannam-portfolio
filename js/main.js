@@ -33,7 +33,7 @@
       "term.hire": "./recruter_rim.sh",
 
       "proj.title": "Projets réalisés",
-      "proj.sub": "Des projets d'infrastructure menés en production, en environnement hébergeur de données de santé (HDS, ISO 27001) chez Groupe CEGI.",
+      "proj.sub": "Des projets d'infrastructure menés en production, en environnement hébergeur de données de santé (HDS, ISO 27001) chez Groupe CEGI. Cliquez sur un projet pour le déplier.",
       "proj.note": "// les extraits de configuration ci-dessous sont anonymisés et reconstitués à partir de projets réels — aucune donnée client ni adresse de production.",
       "tag.infra": "PROJET INFRA",
       "tag.auto": "AUTOMATISATION",
@@ -190,7 +190,7 @@
       "term.hire": "./hire_rim.sh",
 
       "proj.title": "Projects",
-      "proj.sub": "Infrastructure projects delivered in production, in a certified healthcare data hosting environment (HDS, ISO 27001) at Groupe CEGI.",
+      "proj.sub": "Infrastructure projects delivered in production, in a certified healthcare data hosting environment (HDS, ISO 27001) at Groupe CEGI. Click a project to expand it.",
       "proj.note": "// the configuration excerpts below are anonymised and reconstructed from real projects — no client data, no production addresses.",
       "tag.infra": "INFRA PROJECT",
       "tag.auto": "AUTOMATION",

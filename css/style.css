@@ -425,6 +425,39 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .case-card__link:hover { color: var(--accent); }
 .case-card__link svg { width: 16px; height: 16px; }
 
+/* ---------- cartes projets dépliables ---------- */
+:root { interpolate-size: allow-keywords; }
+.case-card--fold { padding: 0; }
+.case-card__summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 26px 84px 26px 30px;
+  position: relative;
+  border-radius: var(--radius);
+}
+.case-card__summary::-webkit-details-marker { display: none; }
+.case-card__summary::marker { content: ""; }
+.case-card__summary:hover h3 { color: var(--accent); }
+.case-card__summary h3 { transition: color 0.2s ease; }
+.case-card--fold .case-card__role { margin-bottom: 0; }
+.case-card__chevron {
+  position: absolute; right: 26px; top: 50%;
+  transform: translateY(-50%);
+  display: grid; place-items: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--border); color: var(--text-muted);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s ease, border-color 0.2s ease;
+}
+.case-card__chevron svg { width: 17px; height: 17px; }
+.case-card__summary:hover .case-card__chevron { color: var(--accent); border-color: var(--accent); }
+.case-card--fold[open] .case-card__chevron { transform: translateY(-50%) rotate(180deg); }
+.case-card--fold .case-card__body { padding: 0 30px 30px; }
+.case-card--fold::details-content {
+  height: 0; overflow: clip;
+  transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1), content-visibility 0.35s allow-discrete;
+}
+.case-card--fold[open]::details-content { height: auto; }
+
 /* ---------- extraits de code ---------- */
 .code-tabs {
   margin-top: 22px;
@@ -602,6 +635,10 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .timeline__marker { left: -26px; }
   .case-card { padding: 22px; }
   .case-card:hover { transform: none; }
+  .case-card--fold { padding: 0; }
+  .case-card__summary { padding: 20px 62px 20px 22px; }
+  .case-card__chevron { right: 16px; width: 32px; height: 32px; }
+  .case-card--fold .case-card__body { padding: 0 22px 22px; }
   .code-tabs__copy { margin-left: 0; }
   .contact__form { padding: 24px; }
   .footer__inner { flex-direction: column-reverse; text-align: center; }
