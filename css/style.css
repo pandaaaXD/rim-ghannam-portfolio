@@ -123,6 +123,35 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .nav__link--cta:hover { color: #06121a; background: var(--gradient); filter: brightness(1.12); }
 .nav__right { display: flex; align-items: center; gap: 10px; }
 
+/* interrupteur coulissant EN / FR */
+.lang-switch {
+  position: relative; display: inline-flex; align-items: center;
+  padding: 4px; border-radius: 99px;
+  background: var(--surface); border: 1px solid var(--border);
+  cursor: pointer; user-select: none;
+  font-family: var(--font-mono); font-size: 0.76rem; font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.lang-switch:hover { border-color: var(--border-strong); }
+.lang-switch__thumb {
+  position: absolute; top: 4px; left: 4px;
+  width: calc(50% - 4px); height: calc(100% - 8px);
+  border-radius: 99px; background: var(--gradient);
+  box-shadow: 0 4px 14px rgba(34, 211, 238, 0.3);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lang-switch[data-lang="fr"] .lang-switch__thumb { transform: translateX(100%); }
+.lang-switch__opt {
+  position: relative; z-index: 1;
+  display: grid; place-items: center;
+  width: 34px; padding: 5px 0;
+  color: var(--text-muted);
+  transition: color 0.25s ease;
+}
+.lang-switch[data-lang="en"] .lang-switch__opt--en,
+.lang-switch[data-lang="fr"] .lang-switch__opt--fr { color: #06121a; }
+
 .nav__toggle { display: none; flex-direction: column; gap: 5px; padding: 10px; }
 .nav__toggle span {
   width: 22px; height: 2px; background: var(--text); border-radius: 2px;
@@ -396,6 +425,39 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .case-card__link:hover { color: var(--accent); }
 .case-card__link svg { width: 16px; height: 16px; }
 
+/* ---------- cartes projets dépliables ---------- */
+:root { interpolate-size: allow-keywords; }
+.case-card--fold { padding: 0; }
+.case-card__summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 26px 84px 26px 30px;
+  position: relative;
+  border-radius: var(--radius);
+}
+.case-card__summary::-webkit-details-marker { display: none; }
+.case-card__summary::marker { content: ""; }
+.case-card__summary:hover h3 { color: var(--accent); }
+.case-card__summary h3 { transition: color 0.2s ease; }
+.case-card--fold .case-card__role { margin-bottom: 0; }
+.case-card__chevron {
+  position: absolute; right: 26px; top: 50%;
+  transform: translateY(-50%);
+  display: grid; place-items: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--border); color: var(--text-muted);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s ease, border-color 0.2s ease;
+}
+.case-card__chevron svg { width: 17px; height: 17px; }
+.case-card__summary:hover .case-card__chevron { color: var(--accent); border-color: var(--accent); }
+.case-card--fold[open] .case-card__chevron { transform: translateY(-50%) rotate(180deg); }
+.case-card--fold .case-card__body { padding: 0 30px 30px; }
+.case-card--fold::details-content {
+  height: 0; overflow: clip;
+  transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1), content-visibility 0.35s allow-discrete;
+}
+.case-card--fold[open]::details-content { height: auto; }
+
 /* ---------- extraits de code ---------- */
 .code-tabs {
   margin-top: 22px;
@@ -439,6 +501,35 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   color: #c9d5e1; white-space: pre;
 }
 .code-tabs__panel .c { color: rgba(148, 163, 184, 0.65); font-style: italic; }
+
+/* ---------- schéma d'architecture ---------- */
+.diagram {
+  margin-top: 22px;
+  background: rgba(10, 14, 20, 0.85);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.diagram__bar {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 8px;
+  padding: 10px 14px;
+  background: rgba(148, 163, 184, 0.06);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.72rem; color: var(--accent);
+}
+.diagram__note { color: var(--text-muted); opacity: 0.8; }
+.diagram__body { padding: 12px; }
+.diagram__body svg { width: 100%; height: auto; display: block; }
+.diagram__body img {
+  width: 100%; height: auto; display: block;
+  border-radius: 6px; border: 1px solid var(--border);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.diagram__body a:hover img {
+  transform: scale(1.01);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
 
 /* ---------- contact ---------- */
 .contact__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
@@ -544,6 +635,10 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .timeline__marker { left: -26px; }
   .case-card { padding: 22px; }
   .case-card:hover { transform: none; }
+  .case-card--fold { padding: 0; }
+  .case-card__summary { padding: 20px 62px 20px 22px; }
+  .case-card__chevron { right: 16px; width: 32px; height: 32px; }
+  .case-card--fold .case-card__body { padding: 0 22px 22px; }
   .code-tabs__copy { margin-left: 0; }
   .contact__form { padding: 24px; }
   .footer__inner { flex-direction: column-reverse; text-align: center; }
