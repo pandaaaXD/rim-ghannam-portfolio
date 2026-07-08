@@ -372,28 +372,47 @@ spanning-tree mode rapid-pvst</code></pre>
                 <span class="case-card__tag mono" data-i18n="tag.infra">PROJET INFRA</span>
                 <span class="case-card__date mono" data-i18n="date.cegi">Groupe CEGI · alternance</span>
               </div>
-              <h3 data-i18n="mon.title">Stack de monitoring Grafana / Loki / PRTG</h3>
-              <p class="case-card__role" data-i18n="mon.role">Déploiement supervision &amp; centralisation des logs</p>
+              <h3 data-i18n="mon.title">NOC — supervision centralisée Grafana (ELK · Loki · PRTG)</h3>
+              <p class="case-card__role" data-i18n="mon.role">Conception d'un centre de supervision (NOC) multi-sources</p>
               <p data-i18n="mon.desc">
-                Mise en place d'une stack de supervision : centralisation des logs avec Loki et
-                Promtail, tableaux de bord Grafana pour la visualisation, et PRTG pour la
-                supervision réseau et les alertes sur les équipements.
+                Mise en place d'un NOC : un point d'observation unique dans Grafana qui fédère
+                plusieurs sources — les logs indexés dans ELK (Elasticsearch), les logs
+                applicatifs collectés par Loki/Promtail et la supervision réseau PRTG — pour
+                surveiller toute l'infrastructure depuis un seul écran.
               </p>
               <ul class="case-card__impact">
-                <li data-i18n="mon.i1"><strong>Logs centralisés</strong> : fini le SSH serveur par serveur pour retrouver une erreur</li>
-                <li data-i18n="mon.i2"><strong>Détection proactive</strong> : alertes PRTG sur les équipements réseau avant que les utilisateurs n'appellent</li>
-                <li data-i18n="mon.i3"><strong>Diagnostic accéléré</strong> : dashboards Grafana croisant métriques et logs au même endroit</li>
+                <li data-i18n="mon.i1"><strong>Un seul écran</strong> : métriques, logs et état du réseau réunis dans des dashboards Grafana communs</li>
+                <li data-i18n="mon.i2"><strong>Trois sources fédérées</strong> : Elasticsearch (ELK), Loki et PRTG interrogés depuis le même outil</li>
+                <li data-i18n="mon.i3"><strong>Diagnostic accéléré</strong> : une alerte réseau PRTG se corrèle aux logs ELK/Loki au même endroit</li>
               </ul>
               <div class="case-card__stack">
-                <span class="chip chip--sm">Grafana</span><span class="chip chip--sm">Loki</span><span class="chip chip--sm">Promtail</span><span class="chip chip--sm">PRTG</span><span class="chip chip--sm">Docker</span>
+                <span class="chip chip--sm">Grafana</span><span class="chip chip--sm">ELK / Elasticsearch</span><span class="chip chip--sm">Loki</span><span class="chip chip--sm">PRTG</span><span class="chip chip--sm">Promtail</span><span class="chip chip--sm">NOC</span>
               </div>
               <div class="code-tabs" data-code-tabs>
                 <div class="code-tabs__bar" role="tablist" aria-label="Extrait de configuration monitoring">
-                  <button class="code-tabs__tab is-active mono" role="tab" aria-selected="true">promtail.yml</button>
-                  <button class="code-tabs__tab mono" role="tab" aria-selected="false">docker-compose.yml</button>
+                  <button class="code-tabs__tab is-active mono" role="tab" aria-selected="true">datasources.yml</button>
+                  <button class="code-tabs__tab mono" role="tab" aria-selected="false">promtail.yml</button>
                   <button class="code-tabs__copy mono" type="button" data-i18n="code.copy" aria-label="Copier l'extrait">copier</button>
                 </div>
-                <pre class="code-tabs__panel is-active"><code><span class="c"># promtail.yml — collecte des logs système vers Loki</span>
+                <pre class="code-tabs__panel is-active"><code><span class="c"># provisioning/datasources/noc.yml — les 3 sources du NOC dans Grafana</span>
+apiVersion: 1
+
+datasources:
+  - name: ELK
+    type: elasticsearch
+    url: http://elastic:9200
+    jsonData:
+      index: "logs-*"
+      timeField: "@timestamp"
+
+  - name: Loki
+    type: loki
+    url: http://loki:3100
+
+  - name: PRTG
+    type: jasonlashua-prtg-datasource
+    url: https://prtg.exemple.local</code></pre>
+                <pre class="code-tabs__panel"><code><span class="c"># promtail.yml — collecte des logs système vers Loki</span>
 server:
   http_listen_port: 9080
 
@@ -408,24 +427,6 @@ scrape_configs:
           job: syslog
           host: srv-app-01
           __path__: /var/log/syslog</code></pre>
-                <pre class="code-tabs__panel"><code><span class="c"># docker-compose.yml — stack Grafana + Loki</span>
-services:
-  loki:
-    image: grafana/loki:latest
-    ports: ["3100:3100"]
-    volumes:
-      - loki-data:/loki
-
-  grafana:
-    image: grafana/grafana:latest
-    ports: ["3000:3000"]
-    depends_on: [loki]
-    volumes:
-      - grafana-data:/var/lib/grafana
-
-volumes:
-  loki-data:
-  grafana-data:</code></pre>
               </div>
             </div>
           </article>
@@ -638,7 +639,7 @@ fi</code></pre>
               <ul class="case-card__impact">
                 <li data-i18n="exp.i1">Déploiement d'un <strong>GLPI haute disponibilité</strong> (GlusterFS, MariaDB, HAProxy + Keepalived)</li>
                 <li data-i18n="exp.i2"><strong>Modernisation du cœur de réseau</strong> du datacenter : remplacement et configuration de switches</li>
-                <li data-i18n="exp.i3">Déploiement d'une stack de <strong>monitoring Grafana / Loki / PRTG</strong></li>
+                <li data-i18n="exp.i3">Mise en place d'un <strong>NOC Grafana</strong> fédérant ELK, Loki et PRTG</li>
                 <li data-i18n="exp.i4"><strong>Support client N1/N2</strong> : ticketing et gestion des incidents</li>
                 <li data-i18n="exp.i5">Administration <strong>Windows Server</strong> (ADDS, IIS, RDS) et <strong>Linux</strong></li>
                 <li data-i18n="exp.i6">Participation aux <strong>plans de continuité et de reprise d'activité</strong> (PCA/PRA)</li>

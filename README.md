@@ -8,7 +8,7 @@ HTML / CSS / JS purs — aucun build, déployable directement sur GitHub Pages.
 
 ## Contenu
 
-- **Projets** : GLPI haute disponibilité (GlusterFS, MariaDB, HAProxy + Keepalived), modernisation du cœur de réseau du datacenter, stack de monitoring Grafana / Loki / PRTG, automatisation & PCA/PRA, dev web.
+- **Projets** : GLPI haute disponibilité (GlusterFS, MariaDB, HAProxy + Keepalived), modernisation du cœur de réseau du datacenter, NOC Grafana multi-sources (ELK, Loki, PRTG), automatisation & PCA/PRA, dev web.
 - **Compétences** : systèmes & OS, réseau & sécurité, automatisation, dev/web + langues et savoir-être.
 - **Parcours** : alternance Groupe CEGI, BUT R&T parcours Cybersécurité (IUT Clermont-Ferrand), bac scientifique.
 - **Contact** : formulaire (FormSubmit), email, téléphone, LinkedIn, GitHub, CV téléchargeable.
