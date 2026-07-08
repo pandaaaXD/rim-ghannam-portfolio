@@ -30,12 +30,17 @@
       </a>
       <div class="nav__right">
         <nav class="nav__links" id="navLinks" aria-label="Navigation principale">
-          <a href="#accueil" class="nav__link is-active">Accueil</a>
-          <a href="#projets" class="nav__link">Projets</a>
-          <a href="#competences" class="nav__link">Compétences</a>
-          <a href="#parcours" class="nav__link">Parcours</a>
-          <a href="#contact" class="nav__link nav__link--cta">Contact</a>
+          <a href="#accueil" class="nav__link is-active" data-i18n="nav.home">Accueil</a>
+          <a href="#projets" class="nav__link" data-i18n="nav.projects">Projets</a>
+          <a href="#competences" class="nav__link" data-i18n="nav.skills">Compétences</a>
+          <a href="#parcours" class="nav__link" data-i18n="nav.path">Parcours</a>
+          <a href="#contact" class="nav__link nav__link--cta" data-i18n="nav.contact">Contact</a>
         </nav>
+        <button class="lang-switch" id="langToggle" data-lang="fr" role="switch" aria-checked="true" aria-label="Switch language / Changer de langue">
+          <span class="lang-switch__thumb" aria-hidden="true"></span>
+          <span class="lang-switch__opt lang-switch__opt--en">EN</span>
+          <span class="lang-switch__opt lang-switch__opt--fr">FR</span>
+        </button>
         <button class="nav__toggle" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -49,15 +54,15 @@
     <section class="hero" id="accueil">
       <div class="container hero__grid">
         <div class="hero__content">
-          <p class="hero__eyebrow reveal"><span class="status-dot" aria-hidden="true"></span> Disponible en CDI dès septembre 2026</p>
-          <h1 class="hero__title reveal">
+          <p class="hero__eyebrow reveal"><span class="status-dot" aria-hidden="true"></span> <span data-i18n="hero.eyebrow">Disponible en CDI dès septembre 2026</span></p>
+          <h1 class="hero__title reveal" data-i18n="hero.title">
             Rim <span class="gradient-text">Ghannam</span><br />
             Technicienne <em>Systèmes &amp; Réseaux</em>
           </h1>
           <p class="hero__role reveal">
             <span class="mono">&gt;</span> <span id="typed" class="typed"></span><span class="typed-cursor" aria-hidden="true">|</span>
           </p>
-          <p class="hero__summary reveal">
+          <p class="hero__summary reveal" data-i18n="hero.summary">
             3 ans d'expérience en alternance chez un hébergeur de données de santé (HDS)
             certifié ISO 27001. À l'aise aussi bien sur Linux que Windows Server, du
             ticketing aux projets d'infrastructure : haute disponibilité, cœur de réseau,
@@ -66,29 +71,29 @@
           <div class="hero__actions reveal">
             <a href="#projets" class="btn btn--primary">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-              Voir mes projets
+              <span data-i18n="btn.projects">Voir mes projets</span>
             </a>
             <a href="assets/cv/Rim-Ghannam-CV.pdf" class="btn btn--ghost" download>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Télécharger mon CV
+              <span data-i18n="btn.cv">Télécharger mon CV</span>
             </a>
             <a href="#contact" class="btn btn--outline">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              Me contacter
+              <span data-i18n="btn.contact">Me contacter</span>
             </a>
           </div>
           <dl class="hero__stats reveal">
             <div class="stat">
               <dt class="stat__value" data-count="3">0</dt>
-              <dd class="stat__label">ans d'alternance systèmes &amp; réseaux</dd>
+              <dd class="stat__label" data-i18n="stat.years">ans d'alternance systèmes &amp; réseaux</dd>
             </div>
             <div class="stat">
               <dt class="stat__value">N1/N2</dt>
-              <dd class="stat__label">support &amp; gestion d'incidents</dd>
+              <dd class="stat__label" data-i18n="stat.support">support &amp; gestion d'incidents</dd>
             </div>
             <div class="stat">
               <dt class="stat__value">ISO 27001</dt>
-              <dd class="stat__label">environnement HDS certifié</dd>
+              <dd class="stat__label" data-i18n="stat.hds">environnement HDS certifié</dd>
             </div>
           </dl>
         </div>
@@ -110,7 +115,7 @@
               <p class="t-out"><span class="t-ok">●</span> grafana.service&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-ok">active (running)</span></p>
               <p><span class="t-prompt">$</span> gluster peer status</p>
               <p class="t-out">Number of Peers: 2 — <span class="t-ok">Connected</span></p>
-              <p><span class="t-prompt">$</span> ./recruter_rim.sh <span class="t-blink">▊</span></p>
+              <p><span class="t-prompt">$</span> <span data-i18n="term.hire">./recruter_rim.sh</span> <span class="t-blink">▊</span></p>
             </div>
           </div>
         </div>
@@ -126,9 +131,9 @@
       <div class="container">
         <header class="section__head reveal">
           <span class="section__num mono">01</span>
-          <h2 class="section__title">Projets réalisés</h2>
-          <p class="section__sub">Des projets d'infrastructure menés en production, en environnement hébergeur de données de santé (HDS, ISO 27001) chez Groupe CEGI.</p>
-          <p class="code-note mono">// les extraits de configuration ci-dessous sont anonymisés et reconstitués à partir de projets réels — aucune donnée client ni adresse de production.</p>
+          <h2 class="section__title" data-i18n="proj.title">Projets réalisés</h2>
+          <p class="section__sub" data-i18n="proj.sub">Des projets d'infrastructure menés en production, en environnement hébergeur de données de santé (HDS, ISO 27001) chez Groupe CEGI.</p>
+          <p class="code-note mono" data-i18n="proj.note">// les extraits de configuration ci-dessous sont anonymisés et reconstitués à partir de projets réels — aucune donnée client ni adresse de production.</p>
         </header>
 
         <div class="timeline">
@@ -138,20 +143,20 @@
             <div class="timeline__marker" aria-hidden="true"></div>
             <div class="case-card">
               <div class="case-card__top">
-                <span class="case-card__tag mono">PROJET INFRA</span>
-                <span class="case-card__date mono">Groupe CEGI · alternance</span>
+                <span class="case-card__tag mono" data-i18n="tag.infra">PROJET INFRA</span>
+                <span class="case-card__date mono" data-i18n="date.cegi">Groupe CEGI · alternance</span>
               </div>
-              <h3>GLPI haute disponibilité (ITSM / CMDB + Ticketing)</h3>
-              <p class="case-card__role">Déploiement de bout en bout — architecture, installation, mise en production</p>
-              <p>
+              <h3 data-i18n="glpi.title">GLPI haute disponibilité (ITSM / CMDB + Ticketing)</h3>
+              <p class="case-card__role" data-i18n="glpi.role">Déploiement de bout en bout — architecture, installation, mise en production</p>
+              <p data-i18n="glpi.desc">
                 Déploiement d'une plateforme GLPI redondée pour le ticketing et la CMDB de
                 l'entreprise : réplication des fichiers avec GlusterFS, base MariaDB répliquée,
                 répartition de charge HAProxy et bascule automatique d'IP virtuelle avec Keepalived.
               </p>
               <ul class="case-card__impact">
-                <li><strong>Zéro point de défaillance unique</strong> : chaque brique (web, BDD, fichiers, load balancer) est redondée</li>
-                <li><strong>Bascule automatique</strong> : VIP Keepalived (VRRP) — la panne d'un nœud est transparente pour les utilisateurs</li>
-                <li><strong>Outil critique</strong> : le ticketing et l'inventaire de toute l'entreprise reposent sur cette plateforme</li>
+                <li data-i18n="glpi.i1"><strong>Zéro point de défaillance unique</strong> : chaque brique (web, BDD, fichiers, load balancer) est redondée</li>
+                <li data-i18n="glpi.i2"><strong>Bascule automatique</strong> : VIP Keepalived (VRRP) — la panne d'un nœud est transparente pour les utilisateurs</li>
+                <li data-i18n="glpi.i3"><strong>Outil critique</strong> : le ticketing et l'inventaire de toute l'entreprise reposent sur cette plateforme</li>
               </ul>
               <div class="case-card__stack">
                 <span class="chip chip--sm">GLPI</span><span class="chip chip--sm">GlusterFS</span><span class="chip chip--sm">MariaDB</span><span class="chip chip--sm">HAProxy</span><span class="chip chip--sm">Keepalived</span><span class="chip chip--sm">Debian</span>
@@ -161,7 +166,7 @@
                   <button class="code-tabs__tab is-active mono" role="tab" aria-selected="true">haproxy.cfg</button>
                   <button class="code-tabs__tab mono" role="tab" aria-selected="false">keepalived.conf</button>
                   <button class="code-tabs__tab mono" role="tab" aria-selected="false">glusterfs</button>
-                  <button class="code-tabs__copy mono" type="button" aria-label="Copier l'extrait">copier</button>
+                  <button class="code-tabs__copy mono" type="button" data-i18n="code.copy" aria-label="Copier l'extrait">copier</button>
                 </div>
                 <pre class="code-tabs__panel is-active"><code><span class="c"># /etc/haproxy/haproxy.cfg — répartition de charge GLPI</span>
 frontend fe_glpi
@@ -206,20 +211,20 @@ mount -t glusterfs node1:/gv_glpi /var/www/glpi/files</code></pre>
             <div class="timeline__marker" aria-hidden="true"></div>
             <div class="case-card">
               <div class="case-card__top">
-                <span class="case-card__tag mono">PROJET INFRA</span>
-                <span class="case-card__date mono">Groupe CEGI · alternance</span>
+                <span class="case-card__tag mono" data-i18n="tag.infra">PROJET INFRA</span>
+                <span class="case-card__date mono" data-i18n="date.cegi">Groupe CEGI · alternance</span>
               </div>
-              <h3>Modernisation du cœur de réseau du datacenter</h3>
-              <p class="case-card__role">Remplacement de switches obsolètes — préparation, configuration, migration</p>
-              <p>
+              <h3 data-i18n="net.title">Modernisation du cœur de réseau du datacenter</h3>
+              <p class="case-card__role" data-i18n="net.role">Remplacement de switches obsolètes — préparation, configuration, migration</p>
+              <p data-i18n="net.desc">
                 Participation à la modernisation du cœur de réseau du datacenter : remplacement
                 des commutateurs obsolètes, préparation des configurations (VLAN, agrégats de
                 liens, spanning-tree) et migration des liaisons en limitant l'impact sur la production.
               </p>
               <ul class="case-card__impact">
-                <li><strong>Datacenter en production</strong> : migration préparée et jouée avec fenêtres de maintenance maîtrisées</li>
-                <li><strong>Configurations reproductibles</strong> : templates de config préparés et vérifiés avant chaque bascule</li>
-                <li><strong>Multi-constructeurs</strong> : environnement Cisco / HPE, firewalls Fortinet &amp; Stormshield en périphérie</li>
+                <li data-i18n="net.i1"><strong>Datacenter en production</strong> : migration préparée et jouée avec fenêtres de maintenance maîtrisées</li>
+                <li data-i18n="net.i2"><strong>Configurations reproductibles</strong> : templates de config préparés et vérifiés avant chaque bascule</li>
+                <li data-i18n="net.i3"><strong>Multi-constructeurs</strong> : environnement Cisco / HPE, firewalls Fortinet &amp; Stormshield en périphérie</li>
               </ul>
               <div class="case-card__stack">
                 <span class="chip chip--sm">Cisco</span><span class="chip chip--sm">HPE</span><span class="chip chip--sm">VLAN</span><span class="chip chip--sm">LACP</span><span class="chip chip--sm">Spanning-tree</span>
@@ -227,7 +232,7 @@ mount -t glusterfs node1:/gv_glpi /var/www/glpi/files</code></pre>
               <div class="code-tabs" data-code-tabs>
                 <div class="code-tabs__bar" role="tablist" aria-label="Extrait de configuration réseau">
                   <button class="code-tabs__tab is-active mono" role="tab" aria-selected="true">switch-acces.cfg</button>
-                  <button class="code-tabs__copy mono" type="button" aria-label="Copier l'extrait">copier</button>
+                  <button class="code-tabs__copy mono" type="button" data-i18n="code.copy" aria-label="Copier l'extrait">copier</button>
                 </div>
                 <pre class="code-tabs__panel is-active"><code><span class="c">! Extrait — raccordement d'un switch d'accès au nouveau cœur</span>
 vlan 20
@@ -253,20 +258,20 @@ spanning-tree mode rapid-pvst</code></pre>
             <div class="timeline__marker" aria-hidden="true"></div>
             <div class="case-card">
               <div class="case-card__top">
-                <span class="case-card__tag mono">PROJET INFRA</span>
-                <span class="case-card__date mono">Groupe CEGI · alternance</span>
+                <span class="case-card__tag mono" data-i18n="tag.infra">PROJET INFRA</span>
+                <span class="case-card__date mono" data-i18n="date.cegi">Groupe CEGI · alternance</span>
               </div>
-              <h3>Stack de monitoring Grafana / Loki / PRTG</h3>
-              <p class="case-card__role">Déploiement supervision &amp; centralisation des logs</p>
-              <p>
+              <h3 data-i18n="mon.title">Stack de monitoring Grafana / Loki / PRTG</h3>
+              <p class="case-card__role" data-i18n="mon.role">Déploiement supervision &amp; centralisation des logs</p>
+              <p data-i18n="mon.desc">
                 Mise en place d'une stack de supervision : centralisation des logs avec Loki et
                 Promtail, tableaux de bord Grafana pour la visualisation, et PRTG pour la
                 supervision réseau et les alertes sur les équipements.
               </p>
               <ul class="case-card__impact">
-                <li><strong>Logs centralisés</strong> : fini le SSH serveur par serveur pour retrouver une erreur</li>
-                <li><strong>Détection proactive</strong> : alertes PRTG sur les équipements réseau avant que les utilisateurs n'appellent</li>
-                <li><strong>Diagnostic accéléré</strong> : dashboards Grafana croisant métriques et logs au même endroit</li>
+                <li data-i18n="mon.i1"><strong>Logs centralisés</strong> : fini le SSH serveur par serveur pour retrouver une erreur</li>
+                <li data-i18n="mon.i2"><strong>Détection proactive</strong> : alertes PRTG sur les équipements réseau avant que les utilisateurs n'appellent</li>
+                <li data-i18n="mon.i3"><strong>Diagnostic accéléré</strong> : dashboards Grafana croisant métriques et logs au même endroit</li>
               </ul>
               <div class="case-card__stack">
                 <span class="chip chip--sm">Grafana</span><span class="chip chip--sm">Loki</span><span class="chip chip--sm">Promtail</span><span class="chip chip--sm">PRTG</span><span class="chip chip--sm">Docker</span>
@@ -275,7 +280,7 @@ spanning-tree mode rapid-pvst</code></pre>
                 <div class="code-tabs__bar" role="tablist" aria-label="Extrait de configuration monitoring">
                   <button class="code-tabs__tab is-active mono" role="tab" aria-selected="true">promtail.yml</button>
                   <button class="code-tabs__tab mono" role="tab" aria-selected="false">docker-compose.yml</button>
-                  <button class="code-tabs__copy mono" type="button" aria-label="Copier l'extrait">copier</button>
+                  <button class="code-tabs__copy mono" type="button" data-i18n="code.copy" aria-label="Copier l'extrait">copier</button>
                 </div>
                 <pre class="code-tabs__panel is-active"><code><span class="c"># promtail.yml — collecte des logs système vers Loki</span>
 server:
@@ -319,21 +324,21 @@ volumes:
             <div class="timeline__marker" aria-hidden="true"></div>
             <div class="case-card">
               <div class="case-card__top">
-                <span class="case-card__tag mono">AUTOMATISATION</span>
-                <span class="case-card__date mono">Groupe CEGI · alternance</span>
+                <span class="case-card__tag mono" data-i18n="tag.auto">AUTOMATISATION</span>
+                <span class="case-card__date mono" data-i18n="date.cegi">Groupe CEGI · alternance</span>
               </div>
-              <h3>Automatisation &amp; plans de continuité (PCA / PRA)</h3>
-              <p class="case-card__role">Scripts Bash / Python, playbooks Ansible, participation aux PCA/PRA</p>
-              <p>
+              <h3 data-i18n="auto.title">Automatisation &amp; plans de continuité (PCA / PRA)</h3>
+              <p class="case-card__role" data-i18n="auto.role">Scripts Bash / Python, playbooks Ansible, participation aux PCA/PRA</p>
+              <p data-i18n="auto.desc">
                 Automatisation des tâches récurrentes d'administration (déploiement de
                 configurations, vérifications de sauvegardes) avec Bash, Python et Ansible,
                 et participation aux plans de continuité et de reprise d'activité — un enjeu
                 central chez un hébergeur de données de santé.
               </p>
               <ul class="case-card__impact">
-                <li><strong>Moins d'erreurs manuelles</strong> : les configurations passent par des playbooks reproductibles</li>
-                <li><strong>Sauvegardes vérifiées</strong> : contrôles automatisés plutôt que « on croise les doigts »</li>
-                <li><strong>Culture PCA/PRA</strong> : procédures de reprise documentées et testées</li>
+                <li data-i18n="auto.i1"><strong>Moins d'erreurs manuelles</strong> : les configurations passent par des playbooks reproductibles</li>
+                <li data-i18n="auto.i2"><strong>Sauvegardes vérifiées</strong> : contrôles automatisés plutôt que « on croise les doigts »</li>
+                <li data-i18n="auto.i3"><strong>Culture PCA/PRA</strong> : procédures de reprise documentées et testées</li>
               </ul>
               <div class="case-card__stack">
                 <span class="chip chip--sm">Ansible</span><span class="chip chip--sm">Bash</span><span class="chip chip--sm">Python</span><span class="chip chip--sm">PCA / PRA</span>
@@ -342,7 +347,7 @@ volumes:
                 <div class="code-tabs__bar" role="tablist" aria-label="Extraits d'automatisation">
                   <button class="code-tabs__tab is-active mono" role="tab" aria-selected="true">deploy_base.yml</button>
                   <button class="code-tabs__tab mono" role="tab" aria-selected="false">check_backup.sh</button>
-                  <button class="code-tabs__copy mono" type="button" aria-label="Copier l'extrait">copier</button>
+                  <button class="code-tabs__copy mono" type="button" data-i18n="code.copy" aria-label="Copier l'extrait">copier</button>
                 </div>
                 <pre class="code-tabs__panel is-active"><code><span class="c"># deploy_base.yml — configuration de base des serveurs Debian</span>
 - hosts: serveurs_debian
@@ -383,19 +388,19 @@ fi</code></pre>
             <div class="timeline__marker" aria-hidden="true"></div>
             <div class="case-card">
               <div class="case-card__top">
-                <span class="case-card__tag mono">PROJET PERSO</span>
-                <span class="case-card__date mono">en continu</span>
+                <span class="case-card__tag mono" data-i18n="tag.perso">PROJET PERSO</span>
+                <span class="case-card__date mono" data-i18n="date.ongoing">en continu</span>
               </div>
-              <h3>Développement web &amp; portfolio</h3>
-              <p class="case-card__role">HTML / CSS / JavaScript · Node.js · React</p>
-              <p>
+              <h3 data-i18n="web.title">Développement web &amp; portfolio</h3>
+              <p class="case-card__role" data-i18n="web.role">HTML / CSS / JavaScript · Node.js · React</p>
+              <p data-i18n="web.desc">
                 En parallèle de l'infra, je développe des projets web — dont ce portfolio,
                 codé à la main sans framework ni build. C'est aussi ce qui me rend à l'aise
                 pour administrer des serveurs web (IIS, Apache/Nginx) : je sais ce qui tourne dessus.
               </p>
               <ul class="case-card__impact">
-                <li><strong>Ce site</strong> : HTML / CSS / JS purs, responsive, déployé sur GitHub Pages</li>
-                <li><strong>Code visible</strong> : sources publiées sur mon GitHub</li>
+                <li data-i18n="web.i1"><strong>Ce site</strong> : HTML / CSS / JS purs, responsive, déployé sur GitHub Pages</li>
+                <li data-i18n="web.i2"><strong>Code visible</strong> : sources publiées sur mon GitHub</li>
               </ul>
               <div class="case-card__stack">
                 <span class="chip chip--sm">HTML</span><span class="chip chip--sm">CSS</span><span class="chip chip--sm">JavaScript</span><span class="chip chip--sm">Node.js</span><span class="chip chip--sm">React</span>
@@ -416,37 +421,37 @@ fi</code></pre>
       <div class="container">
         <header class="section__head reveal">
           <span class="section__num mono">02</span>
-          <h2 class="section__title">Compétences</h2>
-          <p class="section__sub">Systèmes, réseau, sécurité, automatisation — le quotidien d'une technicienne infra.</p>
+          <h2 class="section__title" data-i18n="skills.title">Compétences</h2>
+          <p class="section__sub" data-i18n="skills.sub">Systèmes, réseau, sécurité, automatisation — le quotidien d'une technicienne infra.</p>
         </header>
 
         <div class="skills__grid">
           <div class="skill-group reveal">
             <div class="skill-group__head">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-              <h3>Systèmes &amp; OS</h3>
+              <h3 data-i18n="group.os">Systèmes &amp; OS</h3>
             </div>
             <div class="skill-bar"><div class="skill-bar__row"><span>Linux (Debian, Ubuntu, Kali)</span><span class="mono">90%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="90"></div></div></div>
             <div class="skill-bar"><div class="skill-bar__row"><span>Windows Server (ADDS, IIS, RDS)</span><span class="mono">85%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="85"></div></div></div>
-            <div class="skill-bar"><div class="skill-bar__row"><span>Virtualisation (Hyper-V, Citrix)</span><span class="mono">80%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="80"></div></div></div>
-            <div class="skill-bar"><div class="skill-bar__row"><span>Stockage &amp; HA (GlusterFS, HAProxy)</span><span class="mono">80%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="80"></div></div></div>
+            <div class="skill-bar"><div class="skill-bar__row"><span data-i18n="skill.virt">Virtualisation (Hyper-V, Citrix)</span><span class="mono">80%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="80"></div></div></div>
+            <div class="skill-bar"><div class="skill-bar__row"><span data-i18n="skill.ha">Stockage &amp; HA (GlusterFS, HAProxy)</span><span class="mono">80%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="80"></div></div></div>
           </div>
 
           <div class="skill-group reveal">
             <div class="skill-group__head">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
-              <h3>Réseau &amp; Sécurité</h3>
+              <h3 data-i18n="group.net">Réseau &amp; Sécurité</h3>
             </div>
-            <div class="skill-bar"><div class="skill-bar__row"><span>Switching Cisco / HPE (VLAN, LACP)</span><span class="mono">85%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="85"></div></div></div>
-            <div class="skill-bar"><div class="skill-bar__row"><span>Firewalls Fortinet / Stormshield</span><span class="mono">75%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="75"></div></div></div>
+            <div class="skill-bar"><div class="skill-bar__row"><span data-i18n="skill.switch">Switching Cisco / HPE (VLAN, LACP)</span><span class="mono">85%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="85"></div></div></div>
+            <div class="skill-bar"><div class="skill-bar__row"><span data-i18n="skill.fw">Firewalls Fortinet / Stormshield</span><span class="mono">75%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="75"></div></div></div>
             <div class="skill-bar"><div class="skill-bar__row"><span>TCP/IP, DNS, DHCP, VPN</span><span class="mono">85%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="85"></div></div></div>
-            <div class="skill-bar"><div class="skill-bar__row"><span>Cybersécurité (BUT parcours cyber)</span><span class="mono">75%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="75"></div></div></div>
+            <div class="skill-bar"><div class="skill-bar__row"><span data-i18n="skill.cyber">Cybersécurité (BUT parcours cyber)</span><span class="mono">75%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="75"></div></div></div>
           </div>
 
           <div class="skill-group reveal">
             <div class="skill-group__head">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-              <h3>Automatisation &amp; Supervision</h3>
+              <h3 data-i18n="group.auto">Automatisation &amp; Supervision</h3>
             </div>
             <div class="skill-bar"><div class="skill-bar__row"><span>Bash</span><span class="mono">85%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="85"></div></div></div>
             <div class="skill-bar"><div class="skill-bar__row"><span>Python</span><span class="mono">75%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="75"></div></div></div>
@@ -457,44 +462,44 @@ fi</code></pre>
           <div class="skill-group reveal">
             <div class="skill-group__head">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-              <h3>Dev / Web &amp; Outils</h3>
+              <h3 data-i18n="group.dev">Dev / Web &amp; Outils</h3>
             </div>
             <div class="skill-bar"><div class="skill-bar__row"><span>HTML / CSS / JavaScript</span><span class="mono">80%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="80"></div></div></div>
             <div class="skill-bar"><div class="skill-bar__row"><span>Node.js / React.js</span><span class="mono">70%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="70"></div></div></div>
             <div class="skill-bar"><div class="skill-bar__row"><span>GLPI (ITSM / CMDB / ticketing)</span><span class="mono">90%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="90"></div></div></div>
-            <div class="skill-bar"><div class="skill-bar__row"><span>Documentation &amp; procédures</span><span class="mono">90%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="90"></div></div></div>
+            <div class="skill-bar"><div class="skill-bar__row"><span data-i18n="skill.docs">Documentation &amp; procédures</span><span class="mono">90%</span></div><div class="skill-bar__track"><div class="skill-bar__fill" data-level="90"></div></div></div>
           </div>
         </div>
 
         <div class="certs reveal">
-          <h3 class="certs__title mono">// langues</h3>
+          <h3 class="certs__title mono" data-i18n="langs.title">// langues</h3>
           <ul class="certs__list">
-            <li class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Français — C2</li>
-            <li class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Anglais — C2</li>
-            <li class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Arabe — langue natale</li>
+            <li class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> <span data-i18n="lang.fr">Français — C2</span></li>
+            <li class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> <span data-i18n="lang.en">Anglais — C2</span></li>
+            <li class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> <span data-i18n="lang.ar">Arabe — langue natale</span></li>
           </ul>
         </div>
 
         <div class="about__values reveal">
           <div class="value-card">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-            <h3>Adaptabilité</h3>
-            <p>Linux le matin, Windows Server l'après-midi, un incident réseau entre les deux.</p>
+            <h3 data-i18n="value.adapt.t">Adaptabilité</h3>
+            <p data-i18n="value.adapt.d">Linux le matin, Windows Server l'après-midi, un incident réseau entre les deux.</p>
           </div>
           <div class="value-card">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            <h3>Travail d'équipe</h3>
-            <p>Trois ans en équipe infra : passations, astreintes, documentation partagée.</p>
+            <h3 data-i18n="value.team.t">Travail d'équipe</h3>
+            <p data-i18n="value.team.d">Trois ans en équipe infra : passations, astreintes, documentation partagée.</p>
           </div>
           <div class="value-card">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <h3>Patience</h3>
-            <p>Indispensable au support N1/N2 — et pour diagnostiquer une panne intermittente.</p>
+            <h3 data-i18n="value.patience.t">Patience</h3>
+            <p data-i18n="value.patience.d">Indispensable au support N1/N2 — et pour diagnostiquer une panne intermittente.</p>
           </div>
           <div class="value-card">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <h3>Rigueur</h3>
-            <p>Un environnement HDS certifié ISO 27001 ne laisse pas de place à l'à-peu-près.</p>
+            <h3 data-i18n="value.rigor.t">Rigueur</h3>
+            <p data-i18n="value.rigor.d">Un environnement HDS certifié ISO 27001 ne laisse pas de place à l'à-peu-près.</p>
           </div>
         </div>
       </div>
@@ -505,8 +510,8 @@ fi</code></pre>
       <div class="container">
         <header class="section__head reveal">
           <span class="section__num mono">03</span>
-          <h2 class="section__title">Expérience &amp; Formation</h2>
-          <p class="section__sub">Trois ans d'alternance en production, un BUT orienté cybersécurité.</p>
+          <h2 class="section__title" data-i18n="path.title">Expérience &amp; Formation</h2>
+          <p class="section__sub" data-i18n="path.sub">Trois ans d'alternance en production, un BUT orienté cybersécurité.</p>
         </header>
 
         <div class="timeline">
@@ -514,18 +519,18 @@ fi</code></pre>
             <div class="timeline__marker" aria-hidden="true"></div>
             <div class="case-card">
               <div class="case-card__top">
-                <span class="case-card__tag mono">EXPÉRIENCE</span>
-                <span class="case-card__date mono">sept. 2023 — aujourd'hui</span>
+                <span class="case-card__tag mono" data-i18n="tag.exp">EXPÉRIENCE</span>
+                <span class="case-card__date mono" data-i18n="exp.date">sept. 2023 — aujourd'hui</span>
               </div>
-              <h3>Technicienne Systèmes &amp; Réseaux — Alternance</h3>
-              <p class="case-card__role">Groupe CEGI · hébergeur de données de santé (HDS), certifié ISO 27001</p>
+              <h3 data-i18n="exp.title">Technicienne Systèmes &amp; Réseaux — Alternance</h3>
+              <p class="case-card__role" data-i18n="exp.role">Groupe CEGI · hébergeur de données de santé (HDS), certifié ISO 27001</p>
               <ul class="case-card__impact">
-                <li>Déploiement d'un <strong>GLPI haute disponibilité</strong> (GlusterFS, MariaDB, HAProxy + Keepalived)</li>
-                <li><strong>Modernisation du cœur de réseau</strong> du datacenter : remplacement et configuration de switches</li>
-                <li>Déploiement d'une stack de <strong>monitoring Grafana / Loki / PRTG</strong></li>
-                <li><strong>Support client N1/N2</strong> : ticketing et gestion des incidents</li>
-                <li>Administration <strong>Windows Server</strong> (ADDS, IIS, RDS) et <strong>Linux</strong></li>
-                <li>Participation aux <strong>plans de continuité et de reprise d'activité</strong> (PCA/PRA)</li>
+                <li data-i18n="exp.i1">Déploiement d'un <strong>GLPI haute disponibilité</strong> (GlusterFS, MariaDB, HAProxy + Keepalived)</li>
+                <li data-i18n="exp.i2"><strong>Modernisation du cœur de réseau</strong> du datacenter : remplacement et configuration de switches</li>
+                <li data-i18n="exp.i3">Déploiement d'une stack de <strong>monitoring Grafana / Loki / PRTG</strong></li>
+                <li data-i18n="exp.i4"><strong>Support client N1/N2</strong> : ticketing et gestion des incidents</li>
+                <li data-i18n="exp.i5">Administration <strong>Windows Server</strong> (ADDS, IIS, RDS) et <strong>Linux</strong></li>
+                <li data-i18n="exp.i6">Participation aux <strong>plans de continuité et de reprise d'activité</strong> (PCA/PRA)</li>
               </ul>
             </div>
           </article>
@@ -534,12 +539,12 @@ fi</code></pre>
             <div class="timeline__marker" aria-hidden="true"></div>
             <div class="case-card">
               <div class="case-card__top">
-                <span class="case-card__tag mono">FORMATION</span>
-                <span class="case-card__date mono">diplôme : sept. 2026</span>
+                <span class="case-card__tag mono" data-i18n="tag.edu">FORMATION</span>
+                <span class="case-card__date mono" data-i18n="but.date">diplôme : sept. 2026</span>
               </div>
-              <h3>BUT Réseaux &amp; Télécommunications — Parcours Cybersécurité</h3>
-              <p class="case-card__role">I.U.T. de Clermont-Ferrand (63) · Bac+3 en alternance</p>
-              <p>
+              <h3 data-i18n="but.title">BUT Réseaux &amp; Télécommunications — Parcours Cybersécurité</h3>
+              <p class="case-card__role" data-i18n="but.role">I.U.T. de Clermont-Ferrand (63) · Bac+3 en alternance</p>
+              <p data-i18n="but.desc">
                 Bachelor Universitaire de Technologie : réseaux, systèmes, téléphonie et
                 cybersécurité — mené en alternance, donc appliqué en entreprise au fur et à mesure.
               </p>
@@ -550,21 +555,21 @@ fi</code></pre>
             <div class="timeline__marker" aria-hidden="true"></div>
             <div class="case-card">
               <div class="case-card__top">
-                <span class="case-card__tag mono">FORMATION</span>
-                <span class="case-card__date mono">juillet 2021</span>
+                <span class="case-card__tag mono" data-i18n="tag.edu">FORMATION</span>
+                <span class="case-card__date mono" data-i18n="bac.date">juillet 2021</span>
               </div>
-              <h3>Baccalauréat scientifique</h3>
-              <p class="case-card__role">Shouf National College (SNC) — Liban</p>
+              <h3 data-i18n="bac.title">Baccalauréat scientifique</h3>
+              <p class="case-card__role" data-i18n="bac.role">Shouf National College (SNC) — Liban</p>
             </div>
           </article>
         </div>
 
         <div class="certs reveal">
-          <h3 class="certs__title mono">// en dehors de l'infra</h3>
+          <h3 class="certs__title mono" data-i18n="hobbies.title">// en dehors de l'infra</h3>
           <ul class="certs__list">
-            <li class="chip">🎸 Guitare &amp; chant — 7 ans</li>
-            <li class="chip">🎹 Piano — conservatoire, 2 ans</li>
-            <li class="chip">🏋️ Musculation — 1,5 an</li>
+            <li class="chip">🎸 <span data-i18n="hobby.guitar">Guitare &amp; chant — 7 ans</span></li>
+            <li class="chip">🎹 <span data-i18n="hobby.piano">Piano — conservatoire, 2 ans</span></li>
+            <li class="chip">🏋️ <span data-i18n="hobby.gym">Musculation — 1,5 an</span></li>
           </ul>
         </div>
       </div>
@@ -575,13 +580,13 @@ fi</code></pre>
       <div class="container">
         <header class="section__head reveal">
           <span class="section__num mono">04</span>
-          <h2 class="section__title">Contact</h2>
-          <p class="section__sub">Un poste de technicienne / administratrice systèmes &amp; réseaux ? Parlons-en.</p>
+          <h2 class="section__title" data-i18n="contact.title">Contact</h2>
+          <p class="section__sub" data-i18n="contact.sub">Un poste de technicienne / administratrice systèmes &amp; réseaux ? Parlons-en.</p>
         </header>
 
         <div class="contact__grid">
           <div class="contact__info reveal">
-            <p class="contact__lead">
+            <p class="contact__lead" data-i18n="contact.lead">
               Je recherche un CDI de technicienne / administratrice systèmes &amp; réseaux,
               disponible dès septembre 2026 — basée à Clermont-Ferrand.
             </p>
@@ -604,12 +609,12 @@ fi</code></pre>
               </a>
               <a href="assets/cv/Rim-Ghannam-CV.pdf" download aria-label="Télécharger le CV">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
-                CV (PDF)
+                <span data-i18n="social.cv">CV (PDF)</span>
               </a>
             </div>
             <div class="contact__card mono reveal">
               <p><span class="t-prompt">$</span> ping rim.ghannam</p>
-              <p class="t-out"><span class="t-ok">64 bytes</span> reçus — temps de réponse : <span class="t-ok">&lt; 24h</span></p>
+              <p class="t-out" data-i18n="contact.ping"><span class="t-ok">64 bytes</span> reçus — temps de réponse : <span class="t-ok">&lt; 24h</span></p>
             </div>
           </div>
 
@@ -618,20 +623,20 @@ fi</code></pre>
             <input type="hidden" name="_captcha" value="false" />
             <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
             <div class="field">
-              <label for="fName">Nom</label>
-              <input id="fName" name="name" type="text" placeholder="Votre nom" required autocomplete="name" />
+              <label for="fName" data-i18n="form.name">Nom</label>
+              <input id="fName" name="name" type="text" placeholder="Votre nom" data-i18n-ph="ph.name" required autocomplete="name" />
             </div>
             <div class="field">
-              <label for="fEmail">Email</label>
-              <input id="fEmail" name="email" type="email" placeholder="vous@entreprise.fr" required autocomplete="email" />
+              <label for="fEmail" data-i18n="form.email">Email</label>
+              <input id="fEmail" name="email" type="email" placeholder="vous@entreprise.fr" data-i18n-ph="ph.email" required autocomplete="email" />
             </div>
             <div class="field">
-              <label for="fMsg">Message</label>
-              <textarea id="fMsg" name="message" rows="5" placeholder="Parlez-moi du poste ou du projet…" required></textarea>
+              <label for="fMsg" data-i18n="form.message">Message</label>
+              <textarea id="fMsg" name="message" rows="5" placeholder="Parlez-moi du poste ou du projet…" data-i18n-ph="ph.message" required></textarea>
             </div>
             <button type="submit" class="btn btn--primary btn--full" id="sendBtn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-              <span id="sendBtnText">Envoyer</span>
+              <span id="sendBtnText" data-i18n="btn.send">Envoyer</span>
             </button>
           </form>
         </div>
@@ -641,7 +646,7 @@ fi</code></pre>
 
   <footer class="footer">
     <div class="container footer__inner">
-      <p class="mono">© <span id="year"></span> Rim Ghannam — codé à la main, comme tout ce que j'administre.</p>
+      <p class="mono">© <span id="year"></span> <span data-i18n="footer.text">Rim Ghannam — codé à la main, comme tout ce que j'administre.</span></p>
       <a href="#accueil" class="footer__top" aria-label="Retour en haut">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
       </a>
