@@ -160,7 +160,7 @@
       "ph.message": "Parlez-moi du poste ou du projet…",
       "btn.send": "Envoyer",
       "btn.sending": "Envoi en cours…",
-      "footer.text": "Rim Ghannam - codé à la main, comme tout ce que j'administre.",
+      "footer.text": "Rim Ghannam",
 
       "roles": [
         "Administration Linux & Windows Server",
@@ -317,7 +317,7 @@
       "ph.message": "Tell me about the role or project…",
       "btn.send": "Send",
       "btn.sending": "Sending…",
-      "footer.text": "Rim Ghannam - hand-coded, like everything I administer.",
+      "footer.text": "Rim Ghannam",
 
       "roles": [
         "Linux & Windows Server administration",
