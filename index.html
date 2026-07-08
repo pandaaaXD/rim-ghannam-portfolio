@@ -149,9 +149,10 @@
               <h3 data-i18n="glpi.title">GLPI haute disponibilité (ITSM / CMDB + Ticketing)</h3>
               <p class="case-card__role" data-i18n="glpi.role">Déploiement de bout en bout — architecture, installation, mise en production</p>
               <p data-i18n="glpi.desc">
-                Déploiement d'une plateforme GLPI redondée pour le ticketing et la CMDB de
-                l'entreprise : réplication des fichiers avec GlusterFS, base MariaDB répliquée,
-                répartition de charge HAProxy et bascule automatique d'IP virtuelle avec Keepalived.
+                Déploiement d'une plateforme GLPI entièrement redondée sur 11 VM Debian
+                (Hyper-V / SCVMM) : répartition de charge HAProxy + Keepalived (VIP),
+                serveurs web Nginx/PHP, cluster MariaDB Galera (3 nœuds + arbitre garbd),
+                stockage répliqué GlusterFS et SSO Microsoft Entra ID.
               </p>
               <ul class="case-card__impact">
                 <li data-i18n="glpi.i1"><strong>Zéro point de défaillance unique</strong> : chaque brique (web, BDD, fichiers, load balancer) est redondée</li>
@@ -159,49 +160,159 @@
                 <li data-i18n="glpi.i3"><strong>Outil critique</strong> : le ticketing et l'inventaire de toute l'entreprise reposent sur cette plateforme</li>
               </ul>
               <div class="case-card__stack">
-                <span class="chip chip--sm">GLPI</span><span class="chip chip--sm">GlusterFS</span><span class="chip chip--sm">MariaDB</span><span class="chip chip--sm">HAProxy</span><span class="chip chip--sm">Keepalived</span><span class="chip chip--sm">Debian</span>
+                <span class="chip chip--sm">GLPI 11</span><span class="chip chip--sm">HAProxy</span><span class="chip chip--sm">Keepalived</span><span class="chip chip--sm">Nginx</span><span class="chip chip--sm">MariaDB Galera</span><span class="chip chip--sm">GlusterFS</span><span class="chip chip--sm">Hyper-V</span><span class="chip chip--sm">Entra ID</span>
               </div>
-              <div class="code-tabs" data-code-tabs>
-                <div class="code-tabs__bar" role="tablist" aria-label="Extraits de configuration GLPI HA">
-                  <button class="code-tabs__tab is-active mono" role="tab" aria-selected="true">haproxy.cfg</button>
-                  <button class="code-tabs__tab mono" role="tab" aria-selected="false">keepalived.conf</button>
-                  <button class="code-tabs__tab mono" role="tab" aria-selected="false">glusterfs</button>
-                  <button class="code-tabs__copy mono" type="button" data-i18n="code.copy" aria-label="Copier l'extrait">copier</button>
+              <div class="diagram">
+                <div class="diagram__bar">
+                  <span class="mono">architecture-glpi-ha.svg</span>
+                  <span class="mono diagram__note" data-i18n="diag.bar">// schéma de l'infra en production</span>
                 </div>
-                <pre class="code-tabs__panel is-active"><code><span class="c"># /etc/haproxy/haproxy.cfg — répartition de charge GLPI</span>
-frontend fe_glpi
-    bind *:443 ssl crt /etc/haproxy/certs/glpi.pem
-    default_backend be_glpi
+                <div class="diagram__body">
+                  <svg viewBox="0 0 1200 870" xmlns="http://www.w3.org/2000/svg" font-family="Inter, 'Segoe UI', system-ui, sans-serif" role="img" aria-label="Schéma de l'architecture GLPI haute disponibilité">
+                    <defs>
+                      <marker id="arr" markerWidth="10" markerHeight="10" refX="7.5" refY="3" orient="auto">
+                        <path d="M0,0 L8,3 L0,6 Z" fill="#94a3b8"/>
+                      </marker>
+                      <marker id="arrA" markerWidth="9" markerHeight="9" refX="6.5" refY="2.6" orient="auto">
+                        <path d="M0,0 L7,2.6 L0,5.2 Z" fill="#94a3b8"/>
+                      </marker>
+                      <marker id="arrB" markerWidth="9" markerHeight="9" refX="0.5" refY="2.6" orient="auto">
+                        <path d="M7,0 L0,2.6 L7,5.2 Z" fill="#94a3b8"/>
+                      </marker>
+                    </defs>
 
-backend be_glpi
-    balance roundrobin
-    option httpchk GET /status.php
-    server glpi-web1 10.0.10.11:80 check inter 3s fall 3 rise 2
-    server glpi-web2 10.0.10.12:80 check inter 3s fall 3 rise 2</code></pre>
-                <pre class="code-tabs__panel"><code><span class="c"># /etc/keepalived/keepalived.conf — IP virtuelle partagée (VRRP)</span>
-vrrp_script chk_haproxy {
-    script "pidof haproxy"
-    interval 2
-}
+                    <!-- Titre -->
+                    <text x="600" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#e6edf3" data-i18n="diag.title">Architecture GLPI — Haute Disponibilité (Production)</text>
+                    <text x="600" y="56" text-anchor="middle" font-size="13" fill="#94a3b8" data-i18n="diag.sub">Réseau 192.168.0.0/24 · 11 VM Hyper-V / SCVMM (Debian)</text>
 
-vrrp_instance VI_GLPI {
-    state MASTER
-    interface ens18
-    virtual_router_id 51
-    priority 150
-    advert_int 1
-    virtual_ipaddress {
-        10.0.10.100/24
-    }
-    track_script { chk_haproxy }
-}</code></pre>
-                <pre class="code-tabs__panel"><code><span class="c"># Volume répliqué pour les fichiers GLPI (3 nœuds)</span>
-gluster volume create gv_glpi replica 3 \
-  node1:/data/glpi node2:/data/glpi node3:/data/glpi
-gluster volume start gv_glpi
+                    <!-- ===== Connexions (derrière les boîtes) ===== -->
+                    <line x1="560" y1="144" x2="560" y2="181" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+                    <line x1="560" y1="239" x2="560" y2="266" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+                    <path d="M560,272 C560,290 420,290 420,303" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.55"/>
+                    <path d="M560,272 C560,290 700,290 700,303" fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.55"/>
+                    <line x1="420" y1="379" x2="420" y2="451" stroke="#94a3b8" stroke-width="1.5" opacity="0.55"/>
+                    <line x1="700" y1="379" x2="700" y2="451" stroke="#94a3b8" stroke-width="1.5" opacity="0.55"/>
+                    <line x1="420" y1="379" x2="695" y2="451" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+                    <line x1="700" y1="379" x2="425" y2="451" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+                    <path d="M480,540 C420,575 340,565 320,600" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+                    <path d="M640,540 C760,575 860,565 880,600" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+                    <path d="M875,144 C875,300 830,360 770,435" fill="none" stroke="#818cf8" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arr)"/>
+                    <text x="905" y="300" font-size="12" font-weight="600" fill="#a5b4fc">SSO</text>
+                    <text x="905" y="316" font-size="12" font-weight="600" fill="#a5b4fc">SAML</text>
 
-<span class="c"># Montage côté serveurs web</span>
-mount -t glusterfs node1:/gv_glpi /var/www/glpi/files</code></pre>
+                    <!-- Réplication Galera -->
+                    <line x1="229" y1="651" x2="248" y2="651" stroke="#94a3b8" stroke-width="1.5" opacity="0.7" marker-start="url(#arrB)" marker-end="url(#arrA)"/>
+                    <line x1="394" y1="651" x2="413" y2="651" stroke="#94a3b8" stroke-width="1.5" opacity="0.7" marker-start="url(#arrB)" marker-end="url(#arrA)"/>
+                    <path d="M320,687 C320,694 320,694 320,700" fill="none" stroke="#fbbf24" stroke-width="1.4" stroke-dasharray="4 4"/>
+
+                    <!-- Réplication GlusterFS -->
+                    <line x1="789" y1="651" x2="808" y2="651" stroke="#94a3b8" stroke-width="1.5" opacity="0.7" marker-start="url(#arrB)" marker-end="url(#arrA)"/>
+                    <line x1="954" y1="651" x2="973" y2="651" stroke="#94a3b8" stroke-width="1.5" opacity="0.7" marker-start="url(#arrB)" marker-end="url(#arrA)"/>
+
+                    <!-- ===== Couche accès ===== -->
+                    <rect x="460" y="82" width="200" height="62" rx="12" fill="#111827" stroke="rgba(148,163,184,0.45)" stroke-width="1.5"/>
+                    <text x="560" y="112" text-anchor="middle" font-size="15" font-weight="700" fill="#e6edf3" data-i18n="diag.users">Utilisateurs</text>
+                    <text x="560" y="132" text-anchor="middle" font-size="12" fill="#94a3b8" data-i18n="diag.https">Accès HTTPS</text>
+
+                    <rect x="730" y="82" width="290" height="62" rx="12" fill="rgba(129,140,248,0.10)" stroke="rgba(129,140,248,0.6)" stroke-width="1.5"/>
+                    <text x="875" y="110" text-anchor="middle" font-size="15" font-weight="700" fill="#e6edf3">Microsoft Entra ID</text>
+                    <text x="875" y="130" text-anchor="middle" font-size="12" fill="#a5b4fc" data-i18n="diag.sso">Authentification unique (SSO)</text>
+
+                    <!-- ===== VIP ===== -->
+                    <rect x="435" y="185" width="250" height="54" rx="12" fill="rgba(34,211,238,0.10)" stroke="#22d3ee" stroke-width="2"/>
+                    <text x="560" y="209" text-anchor="middle" font-size="15" font-weight="700" fill="#e6edf3" data-i18n="diag.vip">VIP (adresse virtuelle)</text>
+                    <text x="560" y="229" text-anchor="middle" font-size="13" font-weight="700" fill="#22d3ee" font-family="'JetBrains Mono', monospace">192.168.0.200</text>
+
+                    <!-- ===== Répartition de charge ===== -->
+                    <rect x="290" y="266" width="540" height="120" rx="14" fill="rgba(59,130,246,0.08)" stroke="rgba(96,165,250,0.4)" stroke-width="1.5"/>
+                    <text x="310" y="290" font-size="13.5" font-weight="700" fill="#60a5fa" data-i18n="diag.lb">Répartition de charge — HAProxy 3.0.11 + Keepalived (VRRP)</text>
+
+                    <rect x="320" y="303" width="200" height="72" rx="10" fill="#111827" stroke="#3b82f6" stroke-width="1.5"/>
+                    <circle cx="336" cy="322" r="4" fill="#3b82f6"/>
+                    <text x="348" y="326" font-size="14" font-weight="700" fill="#e6edf3">HA01</text>
+                    <text x="334" y="348" font-size="12.5" font-weight="600" fill="#60a5fa" font-family="'JetBrains Mono', monospace">192.168.0.1</text>
+                    <text x="334" y="366" font-size="10.5" fill="#94a3b8" data-i18n="diag.ha1sub">HAProxy + Keepalived (actif)</text>
+
+                    <rect x="600" y="303" width="200" height="72" rx="10" fill="#111827" stroke="#3b82f6" stroke-width="1.5"/>
+                    <circle cx="616" cy="322" r="4" fill="#3b82f6"/>
+                    <text x="628" y="326" font-size="14" font-weight="700" fill="#e6edf3">HA02</text>
+                    <text x="614" y="348" font-size="12.5" font-weight="600" fill="#60a5fa" font-family="'JetBrains Mono', monospace">192.168.0.2</text>
+                    <text x="614" y="366" font-size="10.5" fill="#94a3b8" data-i18n="diag.ha2sub">HAProxy + Keepalived (secours)</text>
+
+                    <!-- ===== Serveurs web ===== -->
+                    <rect x="290" y="414" width="540" height="120" rx="14" fill="rgba(45,212,191,0.06)" stroke="rgba(45,212,191,0.4)" stroke-width="1.5"/>
+                    <text x="310" y="438" font-size="13.5" font-weight="700" fill="#2dd4bf" data-i18n="diag.web">Serveurs web — Nginx + PHP 8.3 · GLPI 11.0.7</text>
+
+                    <rect x="320" y="451" width="200" height="72" rx="10" fill="#111827" stroke="#2dd4bf" stroke-width="1.5"/>
+                    <circle cx="336" cy="470" r="4" fill="#2dd4bf"/>
+                    <text x="348" y="474" font-size="14" font-weight="700" fill="#e6edf3">WEB01</text>
+                    <text x="334" y="496" font-size="12.5" font-weight="600" fill="#2dd4bf" font-family="'JetBrains Mono', monospace">192.168.0.3</text>
+                    <text x="334" y="514" font-size="10.5" fill="#94a3b8">Nginx · PHP 8.3 · Debian 12</text>
+
+                    <rect x="600" y="451" width="200" height="72" rx="10" fill="#111827" stroke="#2dd4bf" stroke-width="1.5"/>
+                    <circle cx="616" cy="470" r="4" fill="#2dd4bf"/>
+                    <text x="628" y="474" font-size="14" font-weight="700" fill="#e6edf3">WEB02</text>
+                    <text x="614" y="496" font-size="12.5" font-weight="600" fill="#2dd4bf" font-family="'JetBrains Mono', monospace">192.168.0.4</text>
+                    <text x="614" y="514" font-size="10.5" fill="#94a3b8">Nginx · PHP 8.3 · Debian 12</text>
+
+                    <!-- ===== Base de données ===== -->
+                    <rect x="60" y="575" width="520" height="212" rx="14" fill="rgba(251,191,36,0.06)" stroke="rgba(251,191,36,0.35)" stroke-width="1.5"/>
+                    <text x="80" y="598" font-size="13.5" font-weight="700" fill="#fbbf24" data-i18n="diag.db">Base de données — MariaDB Galera Cluster</text>
+
+                    <rect x="85" y="615" width="140" height="72" rx="10" fill="#111827" stroke="#f59e0b" stroke-width="1.5"/>
+                    <circle cx="101" cy="634" r="4" fill="#fbbf24"/>
+                    <text x="113" y="638" font-size="13.5" font-weight="700" fill="#e6edf3">DB-NODE01</text>
+                    <text x="99" y="660" font-size="12.5" font-weight="600" fill="#fbbf24" font-family="'JetBrains Mono', monospace">192.168.0.6</text>
+                    <text x="99" y="678" font-size="10.5" fill="#94a3b8">MariaDB Galera</text>
+
+                    <rect x="250" y="615" width="140" height="72" rx="10" fill="#111827" stroke="#f59e0b" stroke-width="1.5"/>
+                    <circle cx="266" cy="634" r="4" fill="#fbbf24"/>
+                    <text x="278" y="638" font-size="13.5" font-weight="700" fill="#e6edf3">DB-NODE02</text>
+                    <text x="264" y="660" font-size="12.5" font-weight="600" fill="#fbbf24" font-family="'JetBrains Mono', monospace">192.168.0.7</text>
+                    <text x="264" y="678" font-size="10.5" fill="#94a3b8">MariaDB Galera</text>
+
+                    <rect x="415" y="615" width="140" height="72" rx="10" fill="#111827" stroke="#f59e0b" stroke-width="1.5"/>
+                    <circle cx="431" cy="634" r="4" fill="#fbbf24"/>
+                    <text x="443" y="638" font-size="13.5" font-weight="700" fill="#e6edf3">DB-NODE03</text>
+                    <text x="429" y="660" font-size="12.5" font-weight="600" fill="#fbbf24" font-family="'JetBrains Mono', monospace">192.168.0.8</text>
+                    <text x="429" y="678" font-size="10.5" fill="#94a3b8">MariaDB Galera</text>
+
+                    <rect x="250" y="700" width="140" height="54" rx="10" fill="rgba(251,191,36,0.04)" stroke="#f59e0b" stroke-width="1.3" stroke-dasharray="5 4"/>
+                    <text x="320" y="722" text-anchor="middle" font-size="13" font-weight="700" fill="#e6edf3">DB-FC</text>
+                    <text x="320" y="740" text-anchor="middle" font-size="11.5" fill="#fbbf24" data-i18n="diag.garbd">192.168.0.5 · garbd (arbitre / quorum)</text>
+
+                    <text x="320" y="770" text-anchor="middle" font-size="10.5" fill="#94a3b8" opacity="0.8" data-i18n="diag.dbnote">réplication synchrone · écriture sur un nœud à la fois</text>
+
+                    <!-- ===== Stockage partagé ===== -->
+                    <rect x="620" y="575" width="520" height="212" rx="14" fill="rgba(244,114,182,0.06)" stroke="rgba(244,114,182,0.35)" stroke-width="1.5"/>
+                    <text x="640" y="598" font-size="13.5" font-weight="700" fill="#f472b6" data-i18n="diag.storage">Stockage partagé — GlusterFS (config/ · files/ · marketplace/)</text>
+
+                    <rect x="645" y="615" width="140" height="72" rx="10" fill="#111827" stroke="#ec4899" stroke-width="1.5"/>
+                    <circle cx="661" cy="634" r="4" fill="#f472b6"/>
+                    <text x="673" y="638" font-size="14" font-weight="700" fill="#e6edf3">NFS01</text>
+                    <text x="659" y="660" font-size="12.5" font-weight="600" fill="#f472b6" font-family="'JetBrains Mono', monospace">192.168.0.9</text>
+                    <text x="659" y="678" font-size="10.5" fill="#94a3b8">GlusterFS · LVM</text>
+
+                    <rect x="810" y="615" width="140" height="72" rx="10" fill="#111827" stroke="#ec4899" stroke-width="1.5"/>
+                    <circle cx="826" cy="634" r="4" fill="#f472b6"/>
+                    <text x="838" y="638" font-size="14" font-weight="700" fill="#e6edf3">NFS02</text>
+                    <text x="824" y="660" font-size="12.5" font-weight="600" fill="#f472b6" font-family="'JetBrains Mono', monospace">192.168.0.10</text>
+                    <text x="824" y="678" font-size="10.5" fill="#94a3b8">GlusterFS · LVM</text>
+
+                    <rect x="975" y="615" width="140" height="72" rx="10" fill="#111827" stroke="#ec4899" stroke-width="1.5"/>
+                    <circle cx="991" cy="634" r="4" fill="#f472b6"/>
+                    <text x="1003" y="638" font-size="14" font-weight="700" fill="#e6edf3">NFS03</text>
+                    <text x="989" y="660" font-size="12.5" font-weight="600" fill="#f472b6" font-family="'JetBrains Mono', monospace">192.168.0.11</text>
+                    <text x="989" y="678" font-size="10.5" fill="#94a3b8">GlusterFS · LVM</text>
+
+                    <text x="880" y="742" text-anchor="middle" font-size="10.5" fill="#94a3b8" opacity="0.8" data-i18n="diag.fsnote">volume répliqué entre les 3 nœuds (monté sur les serveurs web)</text>
+
+                    <!-- ===== Pied ===== -->
+                    <line x1="60" y1="810" x2="1140" y2="810" stroke="rgba(148,163,184,0.18)" stroke-width="1"/>
+                    <text x="60" y="832" font-size="11.5" fill="#94a3b8" data-i18n="diag.footer1">Passerelle : 192.168.0.254   ·   DNS : 8.8.8.8   ·   Sous-réseau : 192.168.0.0/24</text>
+                    <text x="1140" y="832" text-anchor="end" font-size="11.5" fill="#94a3b8" opacity="0.75" data-i18n="diag.footer2">Noms d'hôtes anonymisés (rôles génériques)</text>
+                  </svg>
+                </div>
               </div>
             </div>
           </article>

@@ -469,6 +469,26 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 .code-tabs__panel .c { color: rgba(148, 163, 184, 0.65); font-style: italic; }
 
+/* ---------- schéma d'architecture ---------- */
+.diagram {
+  margin-top: 22px;
+  background: rgba(10, 14, 20, 0.85);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.diagram__bar {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 8px;
+  padding: 10px 14px;
+  background: rgba(148, 163, 184, 0.06);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.72rem; color: var(--accent);
+}
+.diagram__note { color: var(--text-muted); opacity: 0.8; }
+.diagram__body { padding: 12px; }
+.diagram__body svg { width: 100%; height: auto; display: block; }
+
 /* ---------- contact ---------- */
 .contact__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
 .contact__lead { color: var(--text-muted); margin-bottom: 26px; max-width: 46ch; }
