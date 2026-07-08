@@ -108,14 +108,14 @@
             </div>
             <div class="terminal__body mono">
               <p><span class="t-prompt">$</span> whoami</p>
-              <p class="t-out">rim.ghannam — tech_sys_reseaux</p>
+              <p class="t-out">rim.ghannam — tech-sys-reseaux</p>
               <p><span class="t-prompt">$</span> systemctl status infra</p>
               <p class="t-out"><span class="t-ok">●</span> glpi-ha.service&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-ok">active (running)</span></p>
               <p class="t-out"><span class="t-ok">●</span> haproxy.service&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-ok">active (running)</span></p>
               <p class="t-out"><span class="t-ok">●</span> grafana.service&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-ok">active (running)</span></p>
               <p><span class="t-prompt">$</span> gluster peer status</p>
               <p class="t-out">Number of Peers: 2 — <span class="t-ok">Connected</span></p>
-              <p><span class="t-prompt">$</span> <span data-i18n="term.hire">./recruter_rim.sh</span> <span class="t-blink">▊</span></p>
+              <p><span class="t-prompt">$</span> <span data-i18n="term.hire">./recruter-rim.sh</span> <span class="t-blink">▊</span></p>
             </div>
           </div>
         </div>
@@ -461,12 +461,12 @@ spanning-tree mode rapid-pvst</code></pre>
               </div>
               <div class="code-tabs" data-code-tabs>
                 <div class="code-tabs__bar" role="tablist" aria-label="Extraits d'automatisation">
-                  <button class="code-tabs__tab is-active mono" role="tab" aria-selected="true">deploy_base.yml</button>
-                  <button class="code-tabs__tab mono" role="tab" aria-selected="false">check_backup.sh</button>
+                  <button class="code-tabs__tab is-active mono" role="tab" aria-selected="true">deploy-base.yml</button>
+                  <button class="code-tabs__tab mono" role="tab" aria-selected="false">check-backup.sh</button>
                   <button class="code-tabs__copy mono" type="button" data-i18n="code.copy" aria-label="Copier l'extrait">copier</button>
                 </div>
-                <pre class="code-tabs__panel is-active"><code><span class="c"># deploy_base.yml — configuration de base des serveurs Debian</span>
-- hosts: serveurs_debian
+                <pre class="code-tabs__panel is-active"><code><span class="c"># deploy-base.yml — configuration de base des serveurs Debian</span>
+- hosts: serveurs
   become: true
   tasks:
     - name: Mettre à jour le cache APT
@@ -485,10 +485,10 @@ spanning-tree mode rapid-pvst</code></pre>
         name: ssh
         state: restarted</code></pre>
                 <pre class="code-tabs__panel"><code><span class="c">#!/usr/bin/env bash</span>
-<span class="c"># check_backup.sh — vérifie que la sauvegarde de la nuit existe</span>
-BACKUP_DIR="/mnt/backups/$(date +%F)"
+<span class="c"># check-backup.sh — vérifie que la sauvegarde de la nuit existe</span>
+BACKUP="/mnt/backups/$(date +%F)"
 
-if [[ -d "$BACKUP_DIR" && -n "$(ls -A "$BACKUP_DIR")" ]]; then
+if [[ -d "$BACKUP" && -n "$(ls -A "$BACKUP")" ]]; then
   echo "OK — sauvegarde du $(date +%F) présente"
 else
   echo "ALERTE — sauvegarde manquante" | \

@@ -30,7 +30,7 @@
       "stat.years": "ans d'alternance systèmes &amp; réseaux",
       "stat.support": "support &amp; gestion d'incidents",
       "stat.hds": "environnement HDS certifié",
-      "term.hire": "./recruter_rim.sh",
+      "term.hire": "./recruter-rim.sh",
 
       "proj.title": "Projets réalisés",
       "proj.sub": "Des projets d'infrastructure menés en production, en environnement hébergeur de données de santé (HDS, ISO 27001) chez Groupe CEGI. Cliquez sur un projet pour le déplier.",
@@ -187,7 +187,7 @@
       "stat.years": "years of hands-on systems &amp; network experience",
       "stat.support": "support &amp; incident management",
       "stat.hds": "certified healthcare-data environment",
-      "term.hire": "./hire_rim.sh",
+      "term.hire": "./hire-rim.sh",
 
       "proj.title": "Projects",
       "proj.sub": "Infrastructure projects delivered in production, in a certified healthcare data hosting environment (HDS, ISO 27001) at Groupe CEGI. Click a project to expand it.",
